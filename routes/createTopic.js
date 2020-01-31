@@ -9,13 +9,13 @@ router.post("/add", verify, async (req, res) => {
     if (error) return res.status(400).json({message: error.details[0].message});
   
     //check if topic already exists
-    const topicExist = await Topic.findOne({ title: req.body.title });
+    const topicExist = await Topic.findOne({ title: req.body.title.toLowerCase() });
     if (topicExist) return res.status(400).json({message :"topic already exists"});
   
   
     //create new topic
     const topic = new Topic({
-      title: req.body.title,
+      title: req.body.title.toLowerCase(),
       category: req.body.category
     });
   
@@ -28,7 +28,7 @@ router.post("/add", verify, async (req, res) => {
   });
 
   router.patch('/update', verify, async (req, res) => {
-      const oldTitle = await Topic.findOne({title: req.body.title});
+      const oldTitle = await Topic.findOne({title: req.body._id});
       const newTitle = req.body.newTitle;
 
       if (!oldTitle) return res.status(400).json({message :"topic doesn't exist"});
