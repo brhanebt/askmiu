@@ -4,7 +4,7 @@ const verify = require('./verifyToken');
 
 
 //follow user
-router.patch('/follow/userid/:userid/topic/:topicid',verify,async(req,res,next)=>{
+router.patch('/follow/:userid/:topicid',verify,async(req,res,next)=>{
     const userID = req.params.userid;
     const topicID = req.params.topicid;
 
@@ -19,7 +19,7 @@ router.patch('/follow/userid/:userid/topic/:topicid',verify,async(req,res,next)=
 
 })
 
-router.patch('/unfollow/userid/:userid/topic/:topicid',verify,async(req,res,next)=>{
+router.patch('/unfollow/:userid/:topicid',verify,async(req,res,next)=>{
     const userID = req.params.userid;
     const topicID = req.params.topicid;
 

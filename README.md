@@ -1,12 +1,12 @@
 # askmiu
 
-# Login
+# Login(Post)
  /api/v1/user/login
 
-# Signup
+# Signup(Post)
  /api/v1/user/register
 
-# Follow  topics
-/api/v1/topics/follow/userid/:userid/topic/:topicid
-# Unfollow topics
-/api/v1/topics/unfollow/userid/:userid/topic/:topicid
+# Follow(Patch)  topics
+/api/v1/topics/follow/:userid/:topicid
+# Unfollow(Patch) topics
+/api/v1/topics/unfollow/:userid/:topicid
