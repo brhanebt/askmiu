@@ -31,5 +31,19 @@ const loginValidation = data=>{
   return schema.validate(data);
 
 }
+
+const topicValidation = data=>{
+
+  const schema = joi.object({
+      title: joi.string().required(),
+      category: joi.string().required(),
+  });
+
+  
+//Lets validate data
+return schema.validate(data);
+
+}
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.topicValidation = topicValidation;
