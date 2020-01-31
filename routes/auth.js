@@ -4,6 +4,8 @@ const { registerValidation ,loginValidation } = require("../routes/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
+
+//new user register
 router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).json({message: error.details[0].message});
@@ -31,7 +33,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//LOGIN
+//LOGIN USER
 router.post("/login", async(req, res) => {
 
     const { error } = loginValidation(req.body);
@@ -47,7 +49,7 @@ router.post("/login", async(req, res) => {
 
     //Create and assign a token
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
-    res.header('auth-token',token).json({token:token});
+    res.header('auth-token',token).json({token:token,userId :user._id});
 
 
 });
