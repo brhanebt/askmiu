@@ -28,13 +28,12 @@ router.post("/add", verify, async (req, res) => {
   });
 
   router.patch('/update', verify, async (req, res) => {
-      const oldTitle = await Topic.findOne({title: req.body._id});
+      // const topic = await Topic.findOne({_id: req.body._id});
       const newTitle = req.body.newTitle;
 
-      if (!oldTitle) return res.status(400).json({message :"topic doesn't exist"});
 
       try{
-          await Topic.updateOne({'title': oldTitle.title}, {$set: {'title': newTitle}});
+          await Topic.updateOne({'_id': req.body._id}, {$set: {'title': newTitle}});
           res.json({title: newTitle});
       }catch (err) {
         res.json({message:'Error Occured'});
