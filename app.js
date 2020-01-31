@@ -4,7 +4,8 @@ const dotenv = require('dotenv')
 const authRouter = require("./routes/auth");
 const mongoose = require("mongoose");
 const postRoute = require('./routes/posts');
-var cors = require('cors')
+var followTopics = require('./routes/followtopics');
+var cors = require('cors');
 
 dotenv.config();
 
@@ -17,4 +18,5 @@ app.use(cors())
 app.use(express.json());
 app.use("/api/v1/user", authRouter);
 app.use("/api/v1/posts",postRoute);
+app.use("/api/v1/topics",followTopics);
 app.listen(8080);
