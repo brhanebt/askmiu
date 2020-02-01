@@ -30,8 +30,6 @@ router.post("/add", verify, async (req, res) => {
   router.patch('/update', verify, async (req, res) => {
       // const topic = await Topic.findOne({_id: req.body._id});
       const newTitle = req.body.newTitle;
-
-
       try{
           await Topic.updateOne({'_id': req.body._id}, {$set: {'title': newTitle}});
           res.json({title: newTitle});
