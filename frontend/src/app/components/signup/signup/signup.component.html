@@ -1,0 +1,24 @@
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div formGroupName="signupdetails">
+
+    <div class="form-group">
+      <label for ="email">Email</label>
+      <input type="text" class="form-control" id="email" formControlName="email">
+    </div>
+<br>
+    <div class="form-group">
+      <label for ="name">Name</label>
+      <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+
+    <br>
+    <div class="form-group">
+      <label for ="password">Password</label>
+      <input type="text" class="form-control" id="password" formControlName="password">
+    </div>
+
+  </div>
+  <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">Basic</button>
+
+  </form>
