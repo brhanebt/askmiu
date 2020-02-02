@@ -11,12 +11,16 @@ import { NavComponent } from './components/nav/nav/nav.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FeedComponent } from './components/feed/feed.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    NavComponent
+    NavComponent,
+    FeedComponent,
+    TimelineComponent,
   ],
   imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule, ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule],
 

@@ -4,11 +4,14 @@ import { LoginComponent } from './components/login/login/login.component';
 import { SignupComponent } from './components/signup/signup/signup.component';
 import { NavComponent } from './components/nav/nav/nav.component';
 
+import { TimelineComponent } from './components/timeline/timeline.component';
+
 
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'timeline', component: TimelineComponent},
   {path: '*', component: NavComponent}
 
 
