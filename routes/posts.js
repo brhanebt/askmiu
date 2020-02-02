@@ -2,6 +2,7 @@ const router = require("express").Router();
 const verify = require('./verifyToken');
 const Question=require('../models/Question');
 const User=require('../models/User');
+const mongoose=require('mongoose');
 
 
 router.get('/feed/:userid',verify,async (req,res)=>{
@@ -9,10 +10,10 @@ router.get('/feed/:userid',verify,async (req,res)=>{
     let followedTopics = await User.findOne({"_id":req.params.userid},{"_id":0,"followedTopics":1});
     let query;
     if(!followedTopics){
-      query = {$or:[{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
+      query = {$or:[{"likes":mongoose.Types.ObjectId(req.params.userid)},{"replies":mongoose.Types.ObjectId(req.params.userid)},{"postedby":mongoose.Types.ObjectId(req.params.userid)}]};
     }
     else{
-      query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
+      query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":mongoose.Types.ObjectId(req.params.userid)},{"replies":mongoose.Types.ObjectId(req.params.userid)},{"postedby":mongoose.Types.ObjectId(req.params.userid)}]};
 
     }
     console.log(query);
@@ -58,7 +59,7 @@ router.get('/filter',verify,async (req,res)=>{
 })
 router.post("/addquestion",verify, async (req, res) => {
     const question = new Question({
-      postedby: req.body.userid,
+      postedby: mongoose.Types.ObjectId(req.body.postedby),
       title: req.body.title,
       date:new Date(),
       body:req.body.body,
