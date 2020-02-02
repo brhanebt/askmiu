@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from 'src/app/services/topic/topic.service';
-import {Topic} from '/Workspace/MWA/Project/Project/askmiu-1/models/Topic'
+import { Topic } from 'src/app/models/topic';
 
 @Component({
   selector: 'app-topic',

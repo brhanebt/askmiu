@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Topic} from '/Workspace/MWA/Project/Project/askmiu-1/models/Topic'
 import { Observable } from 'rxjs';
 
 @Injectable({

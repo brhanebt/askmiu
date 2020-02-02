@@ -35,7 +35,7 @@ import { HomeComponent } from './components/home/home/home.component';
     FeedComponent,
     TimelineComponent,
     HomeComponent
- 
+
   ],
   imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule,
      ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule,
