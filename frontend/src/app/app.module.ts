@@ -12,10 +12,18 @@ import {MatButtonModule,MatSnackBarModule} from '@angular/material';
 import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TopicComponent } from './components/topic/topic.component';
+
+
+import { FeedComponent } from './components/feed/feed.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+
+
 import { Appconstant } from './utils/appconstant';
 import { CookieService } from 'ngx-cookie-service';
 import { Localcookie } from './utils/localcookie';
 import { HomeComponent } from './components/home/home/home.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +31,11 @@ import { HomeComponent } from './components/home/home/home.component';
     LoginComponent,
     SignupComponent,
     NavComponent,
+    TopicComponent,
+    FeedComponent,
+    TimelineComponent,
     HomeComponent
+ 
   ],
   imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule,
      ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule,
