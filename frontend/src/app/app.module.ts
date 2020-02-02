@@ -23,6 +23,7 @@ import { Appconstant } from './utils/appconstant';
 import { CookieService } from 'ngx-cookie-service';
 import { Localcookie } from './utils/localcookie';
 import { HomeComponent } from './components/home/home/home.component';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
 
 
 @NgModule({
@@ -39,7 +40,10 @@ import { HomeComponent } from './components/home/home/home.component';
   ],
   imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule,
      ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule,
-     MatButtonModule,MatSnackBarModule,
+     MatButtonModule,MatSnackBarModule,MatToolbarModule,
+     MatSidenavModule,
+     MatListModule,
+     MatIconModule
     ],
 
   providers: [Appconstant, CookieService,Localcookie],
