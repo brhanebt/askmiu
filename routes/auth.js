@@ -8,11 +8,11 @@ const jwt = require('jsonwebtoken');
 //new user register
 router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
-  if (error) return res.status(400).json({message: error.details[0].message});
+  if (error) return res.json({status:false,message: error.details[0].message});
 
   //check if the user is already in database
   const emailExist = await User.findOne({ email: req.body.email.toLowerCase()});
-  if (emailExist) return res.status(400).json({message :"Email already exists"});
+  if (emailExist) return res.json({status:false,message :"Email already exists"});
 
   //Hash the passwords
   const salt = await bcrypt.genSalt(10);
@@ -27,9 +27,9 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    res.json({ user: savedUser._id });
+    res.json({status:true, user: savedUser._id });
   } catch (err) {
-    res.status({message:'Error Occured'});
+    res.json({status:false,message:'Error Occured'});
   }
 });
 
@@ -37,19 +37,19 @@ router.post("/register", async (req, res) => {
 router.post("/login", async(req, res) => {
 
     const { error } = loginValidation(req.body);
-    if (error) return res.json({message:error.details[0].message});
+    if (error) return res.json({status:false,message:error.details[0].message});
 
     //Check if the email exists
     const user = await User.findOne({ email: req.body.email.toLowerCase() });
-    if (!user) return res.json({message:"Email not found"});
+    if (!user) return res.json({status:false,message:"Email not found"});
 
     //Password is correct
     const validpass = await bcrypt.compare(req.body.password,user.password);
-    if(!validpass) return res.json({message:'Invalid Password'});
+    if(!validpass) return res.json({status:false,message:'Invalid Password'});
 
     //Create and assign a token
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
-    res.header('auth-token',token).json({token:token,userId :user._id});
+    res.header('auth-token',token).json({status:true,token:token,userId :user._id});
 
 
 });

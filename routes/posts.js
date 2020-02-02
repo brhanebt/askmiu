@@ -4,19 +4,33 @@ const Question=require('../models/Question');
 const ObjectId=require('mongodb').ObjectID;
 
 
-router.get('/',verify,(req,res)=>{
-  
+router.get('/feed',verify,async (req,res)=>{
+  // const allQuestions
     res.json({message:"This is message"});
+});
+router.get('/search',verify,async (req,res)=>{
+  try{
+    const questions= await Question.find({"topics":{$in:req.query.topics}});
+    res.json(questions);
+  }catch(err){
+    res.json({message:err.message});
+  }
 })
-
+router.get('/filter',verify,async (req,res)=>{
+  try{
+    const questions= await Question.find({"topics":{$in:req.query.topics}});
+    res.json(questions);
+  }catch(err){
+    res.json({message:err.message});
+  }
+})
 router.post("/addquestion",verify, async (req, res) => {
-    
-    //create new 
     const question = new Question({
       postedby: req.body.userid,
       title: req.body.title,
       date:new Date(),
-      body:req.body.body
+      body:req.body.body,
+      topics : req.body.topics
     });
   
     try {
