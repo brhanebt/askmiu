@@ -7,6 +7,7 @@ import { NavComponent } from './components/nav/nav/nav.component';
 import { HomeComponent } from './components/home/home/home.component';
 
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { FeedComponent } from './components/feed/feed.component';
 
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'topic', component: TopicComponent},
   {path: 'timeline', component: TimelineComponent},
+  {path: 'feed', component: FeedComponent},
   {path: '*', component: NavComponent},
   {path: 'home', component: HomeComponent}
 

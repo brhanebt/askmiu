@@ -16,9 +16,10 @@ export class FeedComponent implements OnInit {
 
     this.myForm = this.formBuilder.group({
 
-      Feeddetails :this.formBuilder.group({
+      feeddetails :this.formBuilder.group({
 
-         body : ['body']
+        title: [''],
+        body : ['']
        
 
       })
@@ -27,6 +28,6 @@ export class FeedComponent implements OnInit {
    }
 
    onSubmit() {
-      console.log(this.myForm.value.Feeddetails);
-     this.service.userQuestion(this.myForm.value.Feeddetails);
+      console.log(this.myForm.value.feeddetails);
+     this.service.userQuestion(this.myForm.value.feeddetails);
    }}
