@@ -11,12 +11,14 @@ import { NavComponent } from './components/nav/nav/nav.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TopicComponent } from './components/topic/topic.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    NavComponent
+    NavComponent,
+    TopicComponent
   ],
   imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule, ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule],
 

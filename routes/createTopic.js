@@ -3,6 +3,22 @@ const Topic = require("../models/Topic");
 const { topicValidation } = require("../routes/validation");
 const verify = require('./verifyToken');
 
+router.get("/findall", async (req, res) => {
+
+  const re = await Topic.find({});
+  res.json(re);
+  console.log(re);
+
+
+});
+
+
+router.post("/findone", verify, async (req, res) => {
+
+  const searchTopic = await Topic.find({title: req.body.title});
+  if (!searchTopic) return res.status(400).json({message :"topic not found"});
+  res.json(searchTopic);
+});
 
 router.post("/add", verify, async (req, res) => {
     const { error } = topicValidation(req.body);
@@ -10,7 +26,7 @@ router.post("/add", verify, async (req, res) => {
   
     //check if topic already exists
     const topicExist = await Topic.findOne({ title: req.body.title.toLowerCase() });
-    if (topicExist) return res.status(400).json({message :"topic already exists"});
+    c
   
   
     //create new topic
