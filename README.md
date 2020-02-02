@@ -23,6 +23,22 @@
 # Unfollow(Patch) topics
 ## /api/v1/topics/unfollow/:userid/:topicid
 
+## Get Feed posts
+## /api/v1/posts/feed/:userid
+
+## Get Timeline posts
+## /api/v1/posts/timeline/:userid
+
+## Get Details of a post
+## /api/v1/posts/:postid
+
+
+## Search for posts
+## /api/v1/posts/filter?topics=topicid&topics=topicid&searchstring=searchquery
+
+## Filter posts by topic
+## /api/v1/posts/filter?topics=topicid&topics=topicid
+
 # createTopic(Post, Patch)
 ## /api/v1/topics/add
 {
