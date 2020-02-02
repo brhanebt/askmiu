@@ -19,7 +19,8 @@ const questionSchema = new monngoose.Schema({
         max:1024
     },
     likes:[{}], 
-    replies:[{}]
+    replies:[{}],
+    topics:[]
 
 })
 
