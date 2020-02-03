@@ -2,7 +2,7 @@
 
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div formGroupName="feeddetails" class="container">
-  
+
       <div class="form-group row">
         <div class="col-sm-8">
           <label for ="title">Question</label>
@@ -10,8 +10,19 @@
         <label for ="body">Question detail</label>
         <textarea class="form-control" id="body" row ="5" formControlName="body"></textarea>
         <br>
+          <div class="div-inline col-sm-4" *ngFor="let topic of selectedTopics">
+          <span data-val="${topic._id}">{{topic.title}}</span>
+          <button type="button" class="close" (click)="removeSelectedTopic(topic)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="col-sm-8">
+          <select #t (change)="topicSelected($event)">
+            <option *ngFor="let topic of alltopics" [value]="topic._id">{{topic.title + " " + topic.category}}</option>
+          </select>
+          </div>
       <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">submit</button>
-    </div>    
+    </div>
     </div>
     </div>
     </form>
@@ -26,10 +37,9 @@
           <a [routerLink]="" (click)="onLike()" class="post-reaction-buttons">
               <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
           </a><span>{{question.likes.length}}</span>
-              <form [formGroup]="myReplyForm" (ngSubmit)="onSubmitReply()" class="col-sm-4">                
+              <form [formGroup]="myReplyForm" (ngSubmit)="onSubmitReply()" class="col-sm-4">
                         <input type="text" formControlName="reply"/>
                     <input type="submit" [disabled]="!myReplyForm.valid" value="Reply"/>
                   </form>
           </div>
     </div>
-  
