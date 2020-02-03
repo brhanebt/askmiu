@@ -39,7 +39,7 @@ router.get('/:questionid',verify,async (req,res)=>{
     res.json({message:err.message});
   }
 });
-router.get('/search',verify,async (req,res)=>{
+router.post('/search',verify,async (req,res)=>{
   try{
     // console.log(req.query);
     const questions= await Question.find({$and:[{"topics":{$in:req.query.topics}},{"title":{$regex:req.query.searchstring,$options:'ix'}}]});
@@ -48,9 +48,11 @@ router.get('/search',verify,async (req,res)=>{
     res.json({message:err.message});
   }
 })
-router.get('/filter',verify,async (req,res)=>{
+router.post('/filter',async (req,res)=>{
   try{
+    //console.log(req.query.topics);
     const questions= await Question.find({"topics":{$in:req.query.topics}});
+    //console.log(questions);
     res.json(questions);
   }catch(err){
     res.json({message:err.message});
@@ -92,12 +94,9 @@ router.post("/addquestion",verify, async (req, res) => {
     }
   });
 
-  router.post("/:questionid/reply",verify,async (req,res)=>{
+  router.post("/reply/:questionid",async (req,res)=>{
     try{
-        const reply = {
-            text : req.body.body,
-            replydate: new Date()
-        };
+        const reply = req.body.replies
         const resReply = await Question.updateOne({"_id":req.params.questionid},{$push:{"replies":reply}},{new: true});
         res.json(resReply);
     }catch(err){

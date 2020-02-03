@@ -15,6 +15,8 @@ const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'topic', component: TopicComponent},
+  {path: 'posts/filter', component: TopicComponent},
+  {path: 'posts/reply/:questionid', component: TopicComponent},
   {path: 'timeline', component: TimelineComponent},
   {path: '*', component: NavComponent},
   {path: 'home', component: HomeComponent}
