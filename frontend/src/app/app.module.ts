@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login/login.component';
 import { SignupComponent } from './components/signup/signup/signup.component';
 import { NavComponent } from './components/nav/nav/nav.component';
-import {MatButtonModule,MatSnackBarModule} from '@angular/material';
+import {MatButtonModule, MatSnackBarModule, MatInputModule} from '@angular/material';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,7 +23,7 @@ import { Appconstant } from './utils/appconstant';
 import { CookieService } from 'ngx-cookie-service';
 import { Localcookie } from './utils/localcookie';
 import { HomeComponent } from './components/home/home/home.component';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule } from '@angular/material';
 
 
 @NgModule({
@@ -38,15 +38,18 @@ import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from 
     HomeComponent
 
   ],
-  imports: [BrowserModule,HttpClientModule, AppRoutingModule, FormsModule,
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule,
      ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule,
-     MatButtonModule,MatSnackBarModule,MatToolbarModule,
+     MatButtonModule, MatSnackBarModule, MatToolbarModule,
      MatSidenavModule,
      MatListModule,
-     MatIconModule
+     MatIconModule, MatButtonModule, MatSnackBarModule, MatToolbarModule,
+     MatSidenavModule,
+     MatListModule,
+     MatIconModule, MatButtonModule, MatInputModule
     ],
 
-  providers: [Appconstant, CookieService,Localcookie],
+  providers: [Appconstant, CookieService, Localcookie],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

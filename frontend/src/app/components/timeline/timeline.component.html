@@ -1,4 +1,43 @@
-<div class="form-group">
-    <label for="exampleFormControlTextarea3">Rounded corners</label>
-    <textarea class="form-control" id="exampleFormControlTextarea3" rows="7"></textarea>
+
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Timeline</h4>
+          </div>
+        </div>
+        <div class="row" *ngFor="let post of timelineData">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              {{post.title}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{post.body}}</p>
+              <!-- <a href="#" class="btn btn-primary"></a> -->
+              <footer class="blockquote-footer">Posted on: {{post.date | date:'MM.dd.yyyy HH:mm'}}</footer>
+              <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
+                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+            </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+    <!-- <div class="container col-sm-8" *ngFor="let post of timelineData">
+      <div class="row post-top">
+          <h5>{{post.title}}</h5>
+      </div>
+      <div class="row">
+          <p>{{post.body}}</p>
+      </div>
+      <div class="row">
+          <a [routerLink]="" (click)="onLike()" class="post-reaction-buttons">
+              <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+          </a>
+          </div>
+    </div> -->
