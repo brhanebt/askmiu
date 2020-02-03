@@ -16,24 +16,17 @@ router.get('/feed/:userid',verify,async (req,res)=>{
 
     }
     console.log(query);
-    const questions= await Question.find(query);
+    const questions= await Question.find(query).sort({data:-1});
     res.json(questions);
   }catch(err){
     res.json({message:err.message});
   }
 });
-
-
-router.get("/timeline/:userid", verify, async (req, res) => {
-  try {
-    let query = {
-      $or: [
-        { likes: req.params.userid },
-        { replies: req.params.userid },
-        { postedby: req.params.userid }
-      ]
-    };
-    const questions = await Question.find(query);
+router.get('/timeline/:userid',verify,async (req,res)=>{
+  try{
+    let query = {$or:[{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
+    const questions= await Question.find(query).sort({date: -1});
+    console.log(questions);
     res.json(questions);
   } catch (err) {
     res.json({ message: err.message });

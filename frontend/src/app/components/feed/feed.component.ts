@@ -14,6 +14,7 @@ export class FeedComponent implements OnInit {
    myReplyForm = new FormGroup({
     reply: new FormControl('')
  });
+
  alltopics: [{}]=[{}];
  selectedTopics: {id: string, title: string}[] = [];
 
@@ -39,7 +40,6 @@ export class FeedComponent implements OnInit {
    }
 
    onSubmit() {
-
      const post = {...this.myForm.value.feeddetails, topics: []};
      const topics: string[] = [];
      console.log(this.myForm.value.feeddetails);
