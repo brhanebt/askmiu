@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from 'src/app/services/topic/topic.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Topic } from 'src/app/models/topic';
+import { Localcookie } from 'src/app/utils/localcookie';
+import { Question } from 'src/app/models/Question'
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-topic',
@@ -10,13 +20,33 @@ import { Topic } from 'src/app/models/topic';
 export class TopicComponent implements OnInit {
 
   topic: Topic;
+  question: Question;
+  myForm: FormGroup;
+  action = true;
+  setAutoHide = true;
+  autoHide = 2000;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private service: TopicService) { }
+  constructor(private service: TopicService, private formBuilder: FormBuilder,
+               private snackBar: MatSnackBar,private router:ActivatedRoute) { }
 
   ngOnInit() {
+    this.myForm = this.formBuilder.group({
+      submitReply: this.formBuilder.group({
+        replies: ''
+      })
+    });
+    this.allTopics();
+    this.filteredTopics();
+
+  }
+
+
+  allTopics(){
     this.service.getTopics().subscribe(
       res => {
-        this.topic= res;
+        this.topic = res;
       },
       err => {
         console.log(err);
@@ -24,4 +54,45 @@ export class TopicComponent implements OnInit {
     );
   }
 
+  filteredTopics(){
+    this.router.queryParams.subscribe(async params => {
+      const topicId = await params.topics;
+      this.service.filterTopics(topicId).subscribe(
+        res => {
+          this.question = res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    });
+
+  }
+
+  onSubmit(questionid) {
+    // this.service.loginUser(this.myForm.value.logindetails);
+    console.log(questionid);
+    console.log(this.myForm.value.submitReply);
+    this.service.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+      res => {
+        console.log(res);
+      },
+      err =>{
+        console.log(err);
+      }
+    );
+  }
+
+  // open(message) {
+  //   const config = new MatSnackBarConfig();
+  //   config.verticalPosition = this.verticalPosition;
+  //   config.horizontalPosition = this.horizontalPosition;
+  //   config.duration = this.setAutoHide ? this.autoHide : 0;
+  //   this.snackBar.open(
+  //     message,
+  //     null,
+  //     config
+  //   );
+  // }
 }
+

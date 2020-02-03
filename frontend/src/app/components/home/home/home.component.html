@@ -3,7 +3,7 @@
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
     </button>
-    <h1>SimpleCRM</h1>
+    <h1>ASK MIU</h1>
     <span class="menu-spacer"></span>
     <div>
       <a mat-button [routerLink]="['/home']"> Home </a>
@@ -11,30 +11,36 @@
       <a mat-button [routerLink]="'/signup'"> Contacts </a>
       <a mat-button [routerLink]="'/topic'"> Create Contact </a>
       <a mat-button [routerLink]="'/topic'"> Activities </a>
-      <a mat-button [routerLink]="'/topic'"> Create Activity </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a mat-button (click)="logout()"> Log Out </a>
 
     </div>
   </mat-toolbar-row>
 
 </mat-toolbar>
+
 <mat-sidenav-container>
+
   <mat-sidenav #sidenav>
     <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
 
-      <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
+      <!-- <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
       <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>
       <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
       <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
       <a mat-list-item [routerLink]="'/activities'"> Activities </a>
       <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
-      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
+      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
 
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="height: 88vh;">
+      <!-- <router-outlet > </router-outlet> -->
 
-      <router-outlet name ="sidebar"></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

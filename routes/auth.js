@@ -3,7 +3,7 @@ const User = require("../models/User");
 const { registerValidation ,loginValidation } = require("../routes/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-
+const verify = require('./verifyToken')
 
 //new user register
 router.post("/register", async (req, res) => {
@@ -51,6 +51,17 @@ router.post("/login", async(req, res) => {
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
     res.header('auth-token',token).json({status:true,token:token,userId :user._id});
 
+
+});
+
+router.get('/:userId',verify,async(req,res)=>{
+
+  const user = await User.findOne({_id:req.params.userId});
+  try{
+    res.json({id:user._id,name:user.name,email:user.email,date:user.date,topicscount:user.followedTopics.length});
+  }catch(err){
+    res.json({message:"Something error Occured"})
+  }
 
 });
 module.exports = router;

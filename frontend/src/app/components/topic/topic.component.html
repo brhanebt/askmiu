@@ -1,5 +1,65 @@
-<ng-container *ngFor="let topic of topic">
+<ng-container *ngFor="let question of question">
     <ul>
-        <li>{{topic.title}}</li>
+        <!-- <li>{{question.title}}</li>
+        <li>{{question.title}}</li>
+        <li>{{question.title}}</li>
+        <li>{{question.title}}</li>
+        <li>{{question.title}}</li> -->
     </ul>
+
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">{{question.title}}</h4>
+              <p class="card-category">Posted on: {{question.date}}</p>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="row">
+                  <div>
+                    <p>{{question.body}}</p>
+                  </div>
+                </div>
+                <p>Replies</p>
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit(question._id)">
+                    <div class="container" formGroupName="submitReply">
+
+                        <div class="form-group">
+                            <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
+
+                            </div>
+
+                        <!-- <textarea class="form-control" placeholder="Write your reply here"></textarea> -->
+                        <!-- <button mat-list-item [routerLink]="['/posts/reply', question._id]">Reply</button> -->
+                        <!-- <button mat-list-item >Reply</button> -->
+                        <input type="submit" value ="Reply"/>
+
+                    </div>
+
+                </form>
+                <ng-container *ngFor="let reply of question.replies">
+                    <div>
+                        <ul>
+                            <li>{{reply}}</li>
+                        </ul>
+                    </div>
+                </ng-container>
+                <div class="like-content">
+
+                    <button class="btn-secondary like-review">
+                      <i class="fa fa-heart" aria-hidden="true"></i>{{question.likes.length}} Like
+                    </button>
+
+                  </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>

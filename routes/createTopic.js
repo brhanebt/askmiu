@@ -3,7 +3,7 @@ const Topic = require("../models/Topic");
 const { topicValidation } = require("../routes/validation");
 const verify = require('./verifyToken');
 
-router.get("/findall", async (req, res) => {
+router.get("/findall",verify, async (req, res) => {
 
   const re = await Topic.find({});
   res.json(re);
