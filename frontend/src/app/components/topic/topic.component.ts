@@ -29,7 +29,8 @@ export class TopicComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   constructor(private service: TopicService, private formBuilder: FormBuilder,
-               private snackBar: MatSnackBar,private router:ActivatedRoute) { }
+              private snackBar: MatSnackBar,private activatedRoute: ActivatedRoute, private localcookie: Localcookie,
+              private router: Router) { }
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
@@ -55,7 +56,7 @@ export class TopicComponent implements OnInit {
   }
 
   filteredTopics(){
-    this.router.queryParams.subscribe(async params => {
+    this.activatedRoute.queryParams.subscribe(async params => {
       const topicId = await params.topics;
       this.service.filterTopics(topicId).subscribe(
         res => {
@@ -94,5 +95,12 @@ export class TopicComponent implements OnInit {
   //     config
   //   );
   // }
+
+
+  async logout(){
+    await this.localcookie.clearLoginCookie();
+    this.router.navigate(['/login']);
+  }
+
 }
 

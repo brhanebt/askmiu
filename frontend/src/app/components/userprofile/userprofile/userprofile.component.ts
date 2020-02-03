@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Localcookie } from 'src/app/utils/localcookie';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
+import { TopicService } from 'src/app/services/topic/topic.service';
+import { Topic } from 'src/app/models/topic';
+import { Question } from 'src/app/models/Question';
 
 @Component({
   selector: 'app-userprofile',
@@ -14,12 +20,19 @@ export class UserprofileComponent implements OnInit {
   email;
   followedTopics;
   date;
+  topic: Topic;
+  question: Question;
 
-  constructor(private service: UserprofileService, private formBuilder: FormBuilder, ) { }
+
+  constructor(private service: UserprofileService, private formBuilder: FormBuilder,private localcookie: Localcookie,
+    private router: Router
+    , private topicService: TopicService ) { }
 
   ngOnInit() {
     console.log("COming here");
     this.getUserProfile();
+    this.allTopics();
+
   }
 
   getUserProfile(){
@@ -33,6 +46,24 @@ export class UserprofileComponent implements OnInit {
      err => {
        console.log(err);
      }
+    );
+  }
+
+
+
+  async logout(){
+    await this.localcookie.clearLoginCookie();
+    this.router.navigate(['/login']);
+  }
+
+  allTopics(){
+    this.topicService.getTopics().subscribe(
+      res => {
+        this.topic= res;
+      },
+      err => {
+        console.log(err);
+      }
     );
   }
 

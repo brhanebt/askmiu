@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TimelineService } from 'src/app/services/timeline/timeline.service';
+import { Localcookie } from 'src/app/utils/localcookie';
+import { Router } from '@angular/router';
+import { TopicService } from 'src/app/services/topic/topic.service';
+import { Topic } from 'src/app/models/topic';
+import { Question } from 'src/app/models/Question';
 
 @Component({
   selector: 'app-timeline',
@@ -8,13 +13,18 @@ import { TimelineService } from 'src/app/services/timeline/timeline.service';
 })
 export class TimelineComponent implements OnInit {
   timelineData: [{}] = [{}];
-   constructor(private service: TimelineService) {
-    this.service.userTimeline().subscribe(res => {this.timelineData = res; console.log(res)});
-    console.log(this.timelineData);
 
-   }
+  topic: Topic;
+  question: Question;
+
+  constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
+    , private service: TopicService ) {
+this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; console.log(res)});
+
+}
 
    ngOnInit() {
+    this.allTopics();
 
    }
 
@@ -34,4 +44,22 @@ export class TimelineComponent implements OnInit {
   //  removeSelectedTopic(topic) {
   //   this.selectedTopics = this.selectedTopics.filter(obj => obj !== topic);
   //  }
+
+  allTopics(){
+    this.service.getTopics().subscribe(
+      res => {
+        this.topic= res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+
+  async logout(){
+    await this.localcookie.clearLoginCookie();
+    this.router.navigate(['/login']);
+  }
+
 }
