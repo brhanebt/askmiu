@@ -15,7 +15,7 @@
       <a mat-button (click)="logout()"> Log Out </a>
 
     </div>
-  </mat-toolbar-row>
+  </mat-toolbar-row> 
 
 </mat-toolbar>
 
@@ -23,14 +23,17 @@
 
   <mat-sidenav #sidenav>
     <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
 
-      <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
+      <!-- <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
       <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>
       <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
       <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
       <a mat-list-item [routerLink]="'/activities'"> Activities </a>
       <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
-      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
+      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
 
     </mat-nav-list>
   </mat-sidenav>

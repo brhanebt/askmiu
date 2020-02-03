@@ -28,6 +28,12 @@ import { UserprofileComponent } from './components/userprofile/userprofile/userp
 import { DateconvertPipe } from './pipes/date/dateconvert.pipe';
 import { DatePipe } from '@angular/common';
 import { MainComponent } from './components/main/main/main.component';
+// import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
+// import { UserprofileComponent } from './components/userprofile/userprofile/userprofile.component';
+// import { DateconvertPipe } from './pipes/date/dateconvert.pipe';
+// import { DatePipe } from '@angular/common';
+// import { MainComponent } from './components/main/main/main.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +55,7 @@ import { MainComponent } from './components/main/main/main.component';
      MatButtonModule,MatSnackBarModule,MatToolbarModule,
      MatSidenavModule,
      MatListModule,
-     MatIconModule, MatButtonModule,MatInputModule
+     MatIconModule,MatInputModule
     ],
 
   providers: [Appconstant, CookieService,Localcookie,DatePipe],

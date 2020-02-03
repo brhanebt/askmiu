@@ -15,7 +15,6 @@ import { FeedComponent } from './components/feed/feed.component';
 
 
 const routes: Routes = [
-
 {path: 'login', component: LoginComponent,canActivate:[HomeGuard]},
   {path: '', component: HomeComponent,canActivate:[LoginGuard]},
   {path: 'signup', component: SignupComponent,canActivate:[HomeGuard]},
@@ -25,6 +24,8 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent,canActivate:[LoginGuard]},
   {path: 'profile', component: UserprofileComponent ,canActivate:[LoginGuard]},
   {path: 'feed', component: FeedComponent},
+  {path: 'posts/filter', component: TopicComponent},
+  {path: 'posts/reply/:questionid', component: TopicComponent},
 
 ]
 @NgModule({
