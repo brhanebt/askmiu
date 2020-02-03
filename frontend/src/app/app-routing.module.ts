@@ -23,9 +23,9 @@ const routes: Routes = [
   // {path: '*', component: NavComponent},
   {path: 'home', component: HomeComponent,canActivate:[LoginGuard]},
   {path: 'profile', component: UserprofileComponent ,canActivate:[LoginGuard]},
-  {path: 'feed', component: FeedComponent},
-  {path: 'posts/filter', component: TopicComponent},
-  {path: 'posts/reply/:questionid', component: TopicComponent},
+  {path: 'feed', component: FeedComponent,canActivate:[LoginGuard]},
+  {path: 'posts/filter', component: TopicComponent,canActivate:[LoginGuard]},
+  {path: 'posts/reply/:questionid', component: TopicComponent,canActivate:[LoginGuard]},
 
 ]
 @NgModule({

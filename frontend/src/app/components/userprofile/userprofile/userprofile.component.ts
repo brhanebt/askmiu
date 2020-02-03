@@ -18,6 +18,7 @@ export class UserprofileComponent implements OnInit {
   constructor(private service: UserprofileService, private formBuilder: FormBuilder, ) { }
 
   ngOnInit() {
+    console.log("COming here");
     this.getUserProfile();
   }
 

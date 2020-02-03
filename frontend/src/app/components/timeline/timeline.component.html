@@ -16,7 +16,7 @@
             <div class="card-body">
               <p class="card-text">{{post.body}}</p>
               <!-- <a href="#" class="btn btn-primary"></a> -->
-              <footer class="blockquote-footer">Posted on: {{post.date | date:'MM.dd.yyyy HH:mm'}}</footer>
+              <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer>
               <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
             </a>

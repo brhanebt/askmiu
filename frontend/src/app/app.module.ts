@@ -61,7 +61,7 @@ import { MainComponent } from './components/main/main/main.component';
      MatIconModule, MatButtonModule, MatInputModule
     ],
 
-  providers: [Appconstant, CookieService, Localcookie],
+  providers: [Appconstant, CookieService, Localcookie,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
