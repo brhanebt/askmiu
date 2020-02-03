@@ -10,6 +10,7 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { LoginGuard } from './guards/login/login.guard';
 import { UserprofileComponent } from './components/userprofile/userprofile/userprofile.component';
 import { HomeGuard } from './guards/home/home.guard';
+import { FeedComponent } from './components/feed/feed.component';
 
 
 
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'timeline', component: TimelineComponent , canActivate:[LoginGuard]},
   // {path: '*', component: NavComponent},
   {path: 'home', component: HomeComponent,canActivate:[LoginGuard]},
-  {path: 'profile', component: UserprofileComponent ,canActivate:[LoginGuard]}
+  {path: 'profile', component: UserprofileComponent ,canActivate:[LoginGuard]},
+  {path: 'feed', component: FeedComponent},
 
 ]
 @NgModule({

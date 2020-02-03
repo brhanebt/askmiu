@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const verify = require("./verifyToken");
-const Question = require("../models/Question");
 const User = require("../models/User");
+const Question=require('../models/Question');
+const mongoose=require('mongoose');
 
 router.get("/feed/:userid", verify, async (req, res) => {
   try {
@@ -89,7 +90,25 @@ router.post("/filter", verify, async (req, res) => {
   } catch (err) {
     res.json({ message: err.message });
   }
-});
+})
+
+router.post("/addquestion",verify, async (req, res) => {
+    const question = new Question({
+      postedby: mongoose.Types.ObjectId(req.body.postedby),
+      title: req.body.title,
+      date:new Date(),
+      body:req.body.body,
+      topics : req.body.topics
+    });
+  
+    try {
+      const savedQuestion = await question.save();
+      res.json({ question: savedQuestion });
+    } catch (err) {
+     console.log(err);
+        res.status({message:'Error Occured'});
+    }
+  });
 
 //Add Question
 router.post("/addquestion", verify, async (req, res) => {
