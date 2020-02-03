@@ -10,6 +10,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition
 } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-topic',
@@ -27,7 +28,8 @@ export class TopicComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private service: TopicService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
+  constructor(private service: TopicService, private formBuilder: FormBuilder,
+               private snackBar: MatSnackBar,private router:ActivatedRoute) { }
 
   ngOnInit() {
     this.myForm = this.formBuilder.group({
@@ -53,14 +55,18 @@ export class TopicComponent implements OnInit {
   }
 
   filteredTopics(){
-    this.service.filterTopics().subscribe(
-      res => {
-        this.question= res;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.router.queryParams.subscribe(async params => {
+      const topicId = await params.topics;
+      this.service.filterTopics(topicId).subscribe(
+        res => {
+          this.question = res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    });
+
   }
 
   onSubmit(questionid) {

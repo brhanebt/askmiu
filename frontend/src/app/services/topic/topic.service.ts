@@ -10,7 +10,7 @@ import { Appconstant } from 'src/app/utils/appconstant';
 export class TopicService {
 
   private allTopicsUrl = 'http://localhost:8080/api/v1/topic/findall';
-  private filterTopicsUrl = 'http://localhost:8080/api/v1/posts/filter';
+  private filterTopicsUrl = 'http://localhost:8080/api/v1/posts/filter?topics=';
   private replyUrl = 'http://localhost:8080/api/v1/posts/reply/';
 
 
@@ -33,10 +33,10 @@ export class TopicService {
 
 
 
-  filterTopics():Observable<any > {
+  filterTopics(topicId):Observable<any > {
   //  console.log(JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token);
     return this.httpclient
-      .post(this.filterTopicsUrl, {
+      .post(this.filterTopicsUrl + topicId, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
