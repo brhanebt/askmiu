@@ -26,7 +26,8 @@ const routes: Routes = [
   {path: 'feed', component: FeedComponent,canActivate:[LoginGuard]},
   {path: 'posts/filter', component: TopicComponent,canActivate:[LoginGuard]},
   {path: 'posts/reply/:questionid', component: TopicComponent,canActivate:[LoginGuard]},
-
+  // {path: '404', component: NotFoundComponent},
+  // {path: '**', redirectTo: '/404'}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

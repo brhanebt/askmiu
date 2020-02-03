@@ -4,7 +4,7 @@ const userSchema = new monngoose.Schema({
     name:{
         type:String,
         required: true,
-        min:6
+        min:3
     },
     email:{
         type:String,
@@ -22,6 +22,10 @@ const userSchema = new monngoose.Schema({
     date:{
         type:Date,
         default :Date.now
+    },
+    role:{
+        type:String,
+        required: true,
     },
     followedTopics:[{}],
     questions:[{}],

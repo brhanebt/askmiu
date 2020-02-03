@@ -31,4 +31,9 @@ export class Localcookie {
   clearLoginCookie() {
     this.cookieservice.delete(this.appconstant.logincookie);
   }
+
+  getUserRole(){
+    return JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).role;
+
+  }
 }

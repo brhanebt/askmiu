@@ -14,7 +14,6 @@ import { Question } from 'src/app/models/Question';
   styleUrls: ['./userprofile.component.css']
 })
 export class UserprofileComponent implements OnInit {
-
   myForm: FormGroup;
   name;
   email;
@@ -23,43 +22,27 @@ export class UserprofileComponent implements OnInit {
   topic: Topic;
   question: Question;
 
-
-  constructor(private service: UserprofileService, private formBuilder: FormBuilder,private localcookie: Localcookie,
-    private router: Router
-    , private topicService: TopicService ) { }
+  constructor(
+    private service: UserprofileService,
+    private formBuilder: FormBuilder,
+    private localcookie: Localcookie,
+    private router: Router,
+    private topicService: TopicService
+  ) {}
 
   ngOnInit() {
-    console.log("COming here");
+    console.log('COming here');
     this.getUserProfile();
     this.allTopics();
-
   }
 
-  getUserProfile(){
+  getUserProfile() {
     this.service.getUserProfile().subscribe(
-     data => {
-       this.name = data.name;
-       this.email = data.email;
-       this.followedTopics = 'Followed Topics :' + data.topicscount;
-       this.date = data.date;
-     },
-     err => {
-       console.log(err);
-     }
-    );
-  }
-
-
-
-  async logout(){
-    await this.localcookie.clearLoginCookie();
-    this.router.navigate(['/login']);
-  }
-
-  allTopics(){
-    this.topicService.getTopics().subscribe(
-      res => {
-        this.topic= res;
+      data => {
+        this.name = data.name;
+        this.email = data.email;
+        this.followedTopics = 'Followed Topics :' + data.topicscount;
+        this.date = data.date;
       },
       err => {
         console.log(err);
@@ -67,4 +50,30 @@ export class UserprofileComponent implements OnInit {
     );
   }
 
+  async logout() {
+    await this.localcookie.clearLoginCookie();
+    this.router.navigate(['/login']);
+  }
+
+  allTopics() {
+    this.topicService.getTopics().subscribe(
+      res => {
+        this.topic = res;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  updateProfile(name) {
+    this.service.updateUserProfile(name).subscribe(data => {
+      if (data.updated === true) {
+        this.name = name;
+        console.log("updated");
+      }
+    });
+  }
+
+  
 }
