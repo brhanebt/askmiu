@@ -69,32 +69,24 @@ export class TopicComponent implements OnInit {
     console.log(this.myForm.value.submitReply);
     this.service.submitReply(this.myForm.value.submitReply,questionid).subscribe(
       res => {
-        if (res.status === true) {
-          this.open('Submitted Successfully');
-          // console.log('data',this.localcookie.getLoginCookie());
-          // this.localcookie.clearLoginCookie();
-          // console.log('data2',this.localcookie.getLoginCookie());
-
-        } else {
-          this.open(res.message);
-        }
+        console.log(res);
       },
-      err => {
-        this.open('Something Error Occured');
+      err =>{
+        console.log(err);
       }
     );
   }
 
-  open(message) {
-    const config = new MatSnackBarConfig();
-    config.verticalPosition = this.verticalPosition;
-    config.horizontalPosition = this.horizontalPosition;
-    config.duration = this.setAutoHide ? this.autoHide : 0;
-    this.snackBar.open(
-      message,
-      null,
-      config
-    );
-  }
+  // open(message) {
+  //   const config = new MatSnackBarConfig();
+  //   config.verticalPosition = this.verticalPosition;
+  //   config.horizontalPosition = this.horizontalPosition;
+  //   config.duration = this.setAutoHide ? this.autoHide : 0;
+  //   this.snackBar.open(
+  //     message,
+  //     null,
+  //     config
+  //   );
+  // }
 }
 

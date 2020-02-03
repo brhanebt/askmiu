@@ -1,5 +1,50 @@
 
 
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="feeddetails" class="container">
+
+      <div class="form-group row">
+        <div class="col-sm-8">
+          <label for ="title">Question</label>
+          <input type="text" class="form-control" id="title" formControlName="title"/>
+        <label for ="body">Question detail</label>
+        <textarea class="form-control" id="body" row ="5" formControlName="body"></textarea>
+        <br>
+          <div class="div-inline col-sm-4" *ngFor="let topic of selectedTopics">
+          <span data-val="${topic._id}">{{topic.title}}</span>
+          <button type="button" class="close" (click)="removeSelectedTopic(topic)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="col-sm-8">
+          <select #t (change)="topicSelected($event)">
+            <option *ngFor="let topic of alltopics" [value]="topic._id">{{topic.title + " " + topic.category}}</option>
+          </select>
+          </div>
+      <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">submit</button>
+    </div>
+    </div>
+    </div>
+    </form>
+    <div class="container col-sm-8" *ngFor="let question of feeddata">
+      <div class="row post-top">
+          <h5>{{question.title}}</h5>
+      </div>
+      <div class="row">
+          <p>{{question.body}}</p>
+      </div>
+      <div class="row">
+          <a [routerLink]="" (click)="onLike()" class="post-reaction-buttons">
+              <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+          </a><span>{{question.likes.length}}</span>
+              <form [formGroup]="myReplyForm" (ngSubmit)="onSubmitReply()" class="col-sm-4">
+                        <input type="text" formControlName="reply"/>
+                    <input type="submit" [disabled]="!myReplyForm.valid" value="Reply"/>
+                  </form>
+          </div>
+    </div>
+
+
 <!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit()"></form>
 <div stye="text-align:center">
     <h1>
@@ -10,22 +55,17 @@
     <label for="body">Comment:</label>
     <textarea class="form-control" rows="5" id="body"></textarea>
   </div -->
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <div formGroupName="feeddetails">
-  
+
       <div class="form-group">
         <label for ="body">Question</label>
         <textarea class="form-control" id="body" row ="5" formControlName="body"></textarea>
       </div>
-  
-      <!-- <br>
-      <div class="form-group">
-        <label for ="email">Password</label>
-        <input type="text" class="form-control" id="password" formControlName="password">
-      </div> -->
-  
+
+
+
     </div>
     <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">Basic</button>
-  
-    </form>
-  
+
+    </form> -->

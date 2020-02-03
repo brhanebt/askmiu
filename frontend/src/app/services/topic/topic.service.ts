@@ -34,11 +34,12 @@ export class TopicService {
 
 
   filterTopics():Observable<any > {
+  //  console.log(JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token);
     return this.httpclient
       .post(this.filterTopicsUrl, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'Access-Control-Allow-Headers': 'Content-Type',
           'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
         })
@@ -50,7 +51,7 @@ export class TopicService {
       .post(this.replyUrl+questionid, body, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+           Accept: 'application/json',
           'Access-Control-Allow-Headers': 'Content-Type',
           'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
         })

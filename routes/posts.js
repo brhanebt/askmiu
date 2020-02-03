@@ -4,38 +4,25 @@ const User = require("../models/User");
 const Question=require('../models/Question');
 const mongoose=require('mongoose');
 
-router.get("/feed/:userid", verify, async (req, res) => {
-  try {
-    let followedTopics = await User.findOne(
-      { _id: req.params.userid },
-      { _id: 0, followedTopics: 1 }
-    );
+router.get('/feed/:userid',verify,async (req,res)=>{
+  try{
+    let followedTopics = await User.findOne({"_id":req.params.userid},{"_id":0,"followedTopics":1});
     let query;
-    if (!followedTopics) {
-      query = {
-        $or: [
-          { likes: req.params.userid },
-          { replies: req.params.userid },
-          { postedby: req.params.userid }
-        ]
-      };
-    } else {
-      query = {
-        $or: [
-          { topics: { $in: followedTopics.followedTopics } },
-          { likes: req.params.userid },
-          { replies: req.params.userid },
-          { postedby: req.params.userid }
-        ]
-      };
+    if(!followedTopics){
+      query = {$or:[{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
+    }
+    else{
+      query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
+
     }
     console.log(query);
-    const questions = await Question.find(query);
+    const questions= await Question.find(query);
     res.json(questions);
-  } catch (err) {
-    res.json({ message: err.message });
+  }catch(err){
+    res.json({message:err.message});
   }
 });
+
 
 router.get("/timeline/:userid", verify, async (req, res) => {
   try {
@@ -80,7 +67,7 @@ router.post("/search", verify, async (req, res) => {
 
 //Filter 
 //need to change in future
-router.post("/filter", verify, async (req, res) => {
+router.post("/filter", async (req, res) => {
   try {
     const questions = await Question.find({
       topics: { $in: req.query.topics }
@@ -91,23 +78,23 @@ router.post("/filter", verify, async (req, res) => {
   }
 })
 
-router.post("/addquestion",verify, async (req, res) => {
-    const question = new Question({
-      postedby: req.body.userid,
-      title: req.body.title,
-      date:new Date(),
-      body:req.body.body,
-      topics : req.body.topics
-    });
+// router.post("/addquestion",verify, async (req, res) => {
+//     const question = new Question({
+//       postedby: req.body.userid,
+//       title: req.body.title,
+//       date:new Date(),
+//       body:req.body.body,
+//       topics : req.body.topics
+//     });
   
-    try {
-      const savedQuestion = await question.save();
-      res.json({ question: savedQuestion });
-    } catch (err) {
-     console.log(err);
-        res.status({message:'Error Occured'});
-    }
-  });
+//     try {
+//       const savedQuestion = await question.save();
+//       res.json({ question: savedQuestion });
+//     } catch (err) {
+//      console.log(err);
+//         res.status({message:'Error Occured'});
+//     }
+//   });
 
 //Add Question
 router.post("/addquestion", verify, async (req, res) => {
@@ -157,25 +144,18 @@ router.post("/like/:questionid", verify, async (req, res) => {
 });
 
 //Reply
-router.post("/:questionid/reply", verify, async (req, res) => {
-  try {
-    const reply = {
-      text: req.body.body,
-      replydate: new Date()
-    };
-    const resReply = await Question.updateOne(
-      { _id: req.params.questionid },
-      { $push: { replies: reply } },
-      { new: true }
-    );
-    res.json(resReply);
-  } catch (err) {
-    res.json({ message: "Unable to perform reply" });
+router.post("/reply/:questionid",verify,async (req,res)=>{
+  try{
+      const reply = req.body.replies
+      const resReply = await Question.updateOne({"_id":req.params.questionid},{$push:{"replies":reply}},{new: true});
+      res.json(resReply);
+  }catch(err){
+      res.json({message:"Unable to perform reply"});
   }
 });
 
 // Delete
-router.delete("/delete/:id", function(req, res) {
+router.delete("/delete/:id",verify, function(req, res) {
   console.log(req.params.id);
   let id = req.params.id;
   Question.remove(
