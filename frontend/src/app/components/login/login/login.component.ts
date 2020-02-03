@@ -51,10 +51,6 @@ export class LoginComponent implements OnInit {
           this.open('Login Successful');
           this.localcookie.setLoginCookie(res);
           this.router.navigate(['/home']);
-          // console.log('data',this.localcookie.getLoginCookie());
-          // this.localcookie.clearLoginCookie();
-          // console.log('data2',this.localcookie.getLoginCookie());
-
         } else {
           this.open(res.message);
         }

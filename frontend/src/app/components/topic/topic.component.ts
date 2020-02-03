@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from 'src/app/services/topic/topic.service';
 import { Topic } from 'src/app/models/topic';
+import { Localcookie } from 'src/app/utils/localcookie';
 
 @Component({
   selector: 'app-topic',
@@ -16,7 +17,7 @@ export class TopicComponent implements OnInit {
   ngOnInit() {
     this.service.getTopics().subscribe(
       res => {
-        this.topic= res;
+        this.topic = res;
       },
       err => {
         console.log(err);

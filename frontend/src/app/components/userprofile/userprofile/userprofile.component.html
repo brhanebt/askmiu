@@ -1,0 +1,92 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Edit Profile</h4>
+            <p class="card-category">Complete your profile</p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Username" value="{{name}}"  />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      placeholder="Email address"
+                      type="email"
+                      value="{{email}}"
+                      disabled
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger pull-right"
+              >
+                Update Profile
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+        <!-- <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Change Password</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <mat-form-field class="example-full-width">
+                                          <input matInput placeholder="Old Password" type="password">
+                                        </mat-form-field>
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                          <input matInput placeholder="New Password address" type="password">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Password</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+      </div>
+
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="javascript:void(0)">
+              <img class="img" src="./assets/img/faces/marc.jpg" />
+            </a>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ name }}</h4>
+            <h6 class="card-title">{{ email }}</h6>
+            <h6 class="card-category text-gray">{{ followedTopics }}</h6>
+            <p  class="card-category text-gray">{{ date | dateconvert }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
     </button>
-    <h1>SimpleCRM</h1>
+    <h1>ASK MIU</h1>
     <span class="menu-spacer"></span>
     <div>
       <a mat-button [routerLink]="['/home']"> Home </a>
@@ -11,13 +11,16 @@
       <a mat-button [routerLink]="'/signup'"> Contacts </a>
       <a mat-button [routerLink]="'/topic'"> Create Contact </a>
       <a mat-button [routerLink]="'/topic'"> Activities </a>
-      <a mat-button [routerLink]="'/topic'"> Create Activity </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a mat-button (click)="logout()"> Log Out </a>
 
     </div>
   </mat-toolbar-row>
 
 </mat-toolbar>
+
 <mat-sidenav-container>
+
   <mat-sidenav #sidenav>
     <mat-nav-list>
 
@@ -33,8 +36,8 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div style="height: 88vh;">
+      <!-- <router-outlet > </router-outlet> -->
 
-      <router-outlet name ="sidebar"></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

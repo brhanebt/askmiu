@@ -1,5 +1,9 @@
 # askmiu
 
+# Get User By Id
+## /api/v1/user/:userId
+
+
 # Login(Post)
 ## /api/v1/user/login
 
