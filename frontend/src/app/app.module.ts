@@ -23,7 +23,12 @@ import { Appconstant } from './utils/appconstant';
 import { CookieService } from 'ngx-cookie-service';
 import { Localcookie } from './utils/localcookie';
 import { HomeComponent } from './components/home/home/home.component';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
+// import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatInputModule }from '@angular/material';
+// import { UserprofileComponent } from './components/userprofile/userprofile/userprofile.component';
+// import { DateconvertPipe } from './pipes/date/dateconvert.pipe';
+// import { DatePipe } from '@angular/common';
+// import { MainComponent } from './components/main/main/main.component';
 
 
 @NgModule({
@@ -43,7 +48,10 @@ import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from 
      MatButtonModule,MatSnackBarModule,MatToolbarModule,
      MatSidenavModule,
      MatListModule,
-     MatIconModule
+     MatIconModule,MatButtonModule,MatSnackBarModule,MatToolbarModule,
+     MatSidenavModule,
+     MatListModule,
+     MatIconModule, MatButtonModule,MatInputModule
     ],
 
   providers: [Appconstant, CookieService,Localcookie],

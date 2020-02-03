@@ -2,7 +2,6 @@ const router = require("express").Router();
 const verify = require('./verifyToken');
 const Question=require('../models/Question');
 const User=require('../models/User');
-const mongoose=require('mongoose');
 
 
 router.get('/feed/:userid',verify,async (req,res)=>{
@@ -10,10 +9,10 @@ router.get('/feed/:userid',verify,async (req,res)=>{
     let followedTopics = await User.findOne({"_id":req.params.userid},{"_id":0,"followedTopics":1});
     let query;
     if(!followedTopics){
-      query = {$or:[{"likes":mongoose.Types.ObjectId(req.params.userid)},{"replies":mongoose.Types.ObjectId(req.params.userid)},{"postedby":mongoose.Types.ObjectId(req.params.userid)}]};
+      query = {$or:[{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
     }
     else{
-      query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":mongoose.Types.ObjectId(req.params.userid)},{"replies":mongoose.Types.ObjectId(req.params.userid)},{"postedby":mongoose.Types.ObjectId(req.params.userid)}]};
+      query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
 
     }
     console.log(query);
@@ -40,7 +39,7 @@ router.get('/:questionid',verify,async (req,res)=>{
     res.json({message:err.message});
   }
 });
-router.get('/search',verify,async (req,res)=>{
+router.post('/search',verify,async (req,res)=>{
   try{
     // console.log(req.query);
     const questions= await Question.find({$and:[{"topics":{$in:req.query.topics}},{"title":{$regex:req.query.searchstring,$options:'ix'}}]});
@@ -49,9 +48,11 @@ router.get('/search',verify,async (req,res)=>{
     res.json({message:err.message});
   }
 })
-router.get('/filter',verify,async (req,res)=>{
+router.post('/filter',async (req,res)=>{
   try{
+    //console.log(req.query.topics);
     const questions= await Question.find({"topics":{$in:req.query.topics}});
+    //console.log(questions);
     res.json(questions);
   }catch(err){
     res.json({message:err.message});
@@ -59,7 +60,7 @@ router.get('/filter',verify,async (req,res)=>{
 })
 router.post("/addquestion",verify, async (req, res) => {
     const question = new Question({
-      postedby: mongoose.Types.ObjectId(req.body.postedby),
+      postedby: req.body.userid,
       title: req.body.title,
       date:new Date(),
       body:req.body.body,
@@ -93,12 +94,9 @@ router.post("/addquestion",verify, async (req, res) => {
     }
   });
 
-  router.post("/:questionid/reply",verify,async (req,res)=>{
+  router.post("/reply/:questionid",async (req,res)=>{
     try{
-        const reply = {
-            text : req.body.body,
-            replydate: new Date()
-        };
+        const reply = req.body.replies
         const resReply = await Question.updateOne({"_id":req.params.questionid},{$push:{"replies":reply}},{new: true});
         res.json(resReply);
     }catch(err){
