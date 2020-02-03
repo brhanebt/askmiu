@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="navbar">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
@@ -17,7 +17,7 @@
 
 <mat-sidenav-container>
 
-  <mat-sidenav #sidenav>
+  <mat-sidenav #sidenav class="navbar">
     <mat-nav-list>
       <ng-container *ngFor="let topic of topic">
         <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
@@ -38,25 +38,26 @@
       <!-- <router-outlet > </router-outlet> -->
       <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
 
-      <div class="main-content">
+      <div class="mainbody">
         <div class="container-fluid">
+          <div class="row justify-content-md-center">
 
             <div class="col-md-8">
 
-              <div class="card">
+              <!-- <div class="card">
                 <div class="card-header">
                   <h4 class="card-title">Feed</h4>
                 </div>
-              </div>
+              </div> -->
               <div>
                 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
                   <div formGroupName="feeddetails">
                     <div class="form-group row">
                       <div class="col-sm-8 card-body">
-                        <label for ="title">Question</label>
-                        <input type="text" class="form-control" id="title" formControlName="title"/>
-                      <label for ="body">Question detail</label>
-                      <textarea class="form-control" id="body" row ="5" formControlName="body"></textarea>
+                        <h2 for ="title">Ask a Question</h2>
+                        <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter title"/>
+                      <!-- <label for ="body">Question detail</label> -->
+                      <textarea class="form-control" id="body" row ="5" formControlName="body" placeholder="What's your Question"></textarea>
                       <br>
                         <div class="div-inline col-sm-4 card-body" *ngFor="let topic of selectedTopics">
                         <span data-val="${topic._id}">{{topic.title}}</span>
@@ -64,11 +65,12 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
-                        <div class="col-sm-8 card-text">
+                        <div class="">
                         <select #t (change)="topicSelected($event)">
                           <option *ngFor="let topic of alltopics" [value]="topic._id">{{topic.title + " " + topic.category}}</option>
                         </select>
                         </div>
+                        <br>
                     <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">submit</button>
                   </div>
                   </div>
@@ -79,13 +81,14 @@
               <div class="row" *ngFor="let post of feeddata">
               <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header">
-                    {{post.title}}
+                  <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{post.title}}</h4>
+                    <p class="card-category">Posted on: {{post.date | dateconvert}}</p>
                   </div>
                   <div class="card-body">
                     <p class="card-text">{{post.body}}</p>
                     <!-- <a href="#" class="btn btn-primary"></a> -->
-                    <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer>
+                    <!-- <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer> --> 
                     <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
                       <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                       <span>{{post.likes.length}}</span>
@@ -97,9 +100,12 @@
                   </div>
                 </div>
                 </div>
+                <div style="opacity: 0;">"       "</div>
+                
               </div>
             </div>
           </div>
+        </div>
         </div>
 
   <!--
