@@ -1,0 +1,153 @@
+<mat-toolbar class="navbar">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>ASK MIU</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="['/home']"> Home </a>
+      <a mat-button [routerLink]="['/timeline']"> Timeline </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a *ngIf="isAdmin" mat-button [routerLink]="'/addtopic'"> Add Topic</a>
+      <a *ngIf="!isAdmin" mat-button [routerLink]="'/followtopic'"> Follow Topic</a>
+
+      <a  mat-button (click)="logout()"> Log Out </a>
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav class="navbar">
+    <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
+
+      <!-- <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>
+      <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
+      <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
+      <a mat-list-item [routerLink]="'/activities'"> Activities </a>
+      <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
+      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <!-- <router-outlet > </router-outlet> -->
+      <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
+
+      <div class="mainbody">
+        <div class="container-fluid">
+          <div class="row justify-content-md-center">
+
+            <div class="col-md-8">
+
+              <!-- <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Feed</h4>
+                </div>
+              </div> -->
+              <div>
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                  <div formGroupName="feeddetails">
+                    <div class="form-group row">
+                      <div class="col-sm-8 card-body">
+                        <h2 for ="title">Ask a Question</h2>
+                        <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter title"/>
+                      <!-- <label for ="body">Question detail</label> -->
+                      <textarea class="form-control" id="body" row ="5" formControlName="body" placeholder="What's your Question"></textarea>
+                      <br>
+                        <div class="div-inline col-sm-4 card-body" *ngFor="let topic of selectedTopics">
+                        <span data-val="${topic._id}">{{topic.title}}</span>
+                        <button type="button" class="close" (click)="removeSelectedTopic(topic)">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="">
+                          <p>Select Related Topics</p>
+                        <select #t (change)="topicSelected($event)">
+                          <option *ngFor="let topic of alltopics" [value]="topic._id">{{topic.title + " " + topic.category}}</option>
+                        </select>
+                        </div>
+                        <br>
+                    <button mat-raised-button type="submit" color="primary" class="btn btn-primary" [disabled]="!myForm.valid">submit</button>
+                  </div>
+                  </div>
+                  </div>
+                  </form>
+
+              </div>
+              <div class="row" *ngFor="let post of feeddata">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{post.title}}</h4>
+                    <p class="card-category">Posted on: {{post.date | dateconvert}}</p>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">{{post.body}}</p>
+                    <form [formGroup]="myForm" (ngSubmit)="onReply(post)">
+                      <div class="col-6" formGroupName="submitReply">
+
+                          <div class="form-group">
+                              <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
+
+                              </div>
+
+                          <input type="submit" value ="Reply"/>
+
+                      </div>
+
+                  </form>
+                  <div class="card-body">Replies</div>
+                <ng-container *ngFor="let reply of post.replies">
+                    <div>
+                        <ul>
+                            <li>{{reply}}</li>
+                        </ul>
+                    </div>
+                </ng-container>
+                    <button class="btn btn-primary" (click)="onLike(post)" class="btn-primary">
+                      <i class="fa fa-heart" aria-hidden="true"></i><span>&nbsp;{{post.likes.length}}&nbsp;</span><span>&nbsp;Like</span>
+                      </button>
+
+
+                  </div>
+                </div>
+                </div>
+                <div style="opacity: 0;">"       "</div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+  <!--
+      <div class="container col-sm-8" *ngFor="let question of feeddata">
+        <div class="row post-top">
+            <h5>{{question.title}}</h5>
+        </div>
+        <div class="row">
+            <p>{{question.body}}</p>
+        </div>
+        <div class="row">
+            <a [routerLink]="" (click)="onLike()" class="post-reaction-buttons">
+                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+            </a><span>{{question.likes.length}}</span>
+                <form [formGroup]="myReplyForm" (ngSubmit)="onSubmitReply()" class="col-sm-4">
+                          <input type="text" formControlName="reply"/>
+                      <input type="submit" [disabled]="!myReplyForm.valid" value="Reply"/>
+                    </form>
+            </div>
+      </div> -->
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,202 @@
+<mat-toolbar class="navbar">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>ASK MIU</h1>
+    <span class="menu-spacer"></span>
+    <div>
+
+      <a mat-button [routerLink]="['/home']"> Home </a>
+      <a mat-button [routerLink]="['/timeline']"> Timeline </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a *ngIf="isAdmin" mat-button [routerLink]="'/addtopic'"> Add Topic</a>
+      <a *ngIf="!isAdmin" mat-button [routerLink]="'/followtopic'"> Follow Topic</a>
+      <a mat-button (click)="logout()"> Log Out </a>
+
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav class="navbar">
+    <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
+
+      <!-- <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>
+      <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
+      <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
+      <a mat-list-item [routerLink]="'/activities'"> Activities </a>
+      <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
+      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+
+
+<div class="main-content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Edit Profile</h4>
+            <p class="card-category">Complete your profile</p>
+          </div>
+          <!-- <div class="card-body"> -->
+            <form [formGroup]="updateusernameForm" (ngSubmit)="updateProfile()">
+              <div formGroupName="updateusernamegroup">
+                <div class="form-group row">
+                  <div class="col-sm-8 card-body">
+                   <h6>Change Username</h6>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      formControlName="name"
+                      placeholder="Enter Name here"
+                      value="{{name}}" (input)="name = $event.target.value"
+                    />
+                    <br />
+
+
+                    <br>
+                    <button
+                      mat-raised-button
+                      type="submit"
+                      color="primary"
+                      class="btn btn-primary"
+                      [disabled]="!updateusernameForm.valid"
+                    >
+                      Change Username
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <!-- <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Username" value="{{name}}" (input)="name = $event.target.value" required />
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger pull-right" (click)="updateProfile(name)"
+              >
+                Update Username
+              </button>
+              <div class="clearfix"></div>
+            </form> -->
+          <!-- </div> -->
+
+          <form [formGroup]="updatepasswordForm" (ngSubmit)="onPasswordChange()">
+            <div formGroupName="updatepasswordgroup">
+              <div class="form-group row">
+                <div class="col-sm-8 card-body">
+                 <h6>Change Password</h6>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="oldpassword"
+                    formControlName="oldpassword"
+                    placeholder="Old Password here"
+                  />
+                  <br />
+                  <input
+                  type="password"
+                    class="form-control"
+                    id="newpassword"
+                    formControlName="newpassword"
+                    placeholder="New Password Here"
+                  />
+
+                  <br>
+                  <button
+                    mat-raised-button
+                    type="submit"
+                    color="primary"
+                    class="btn btn-primary"
+                    [disabled]="!updatepasswordForm.valid"
+                  >
+                    Change password
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+<!--
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Old Password" />
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="New Password" type="password"  />
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger pull-right" (click)="updateProfile(name)"
+              >
+                Change Password
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div> -->
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="javascript:void(0)">
+              <img class="img" src="./assets/img/faces/marc.jpg" />
+            </a>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ name }}</h4>
+            <h6 class="card-title">{{ email }}</h6>
+            <h6 class="card-category text-gray">{{ followedTopics }}</h6>
+            <p  class="card-category text-gray">{{ date |dateconvert }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+</mat-sidenav-content>
+</mat-sidenav-container>
+
+

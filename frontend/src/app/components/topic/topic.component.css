@@ -1,0 +1,46 @@
+
+.like-content .btn-secondary {
+	  display: block;
+	  /* margin: 40px auto 0px; */
+    /* text-align: center; */
+    background: #2780e3;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(240, 75, 113);
+    /* padding: 10px 17px; */
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+.like-content .btn-secondary:hover {
+	  transform: translateY(-3px);
+}
+.like-content .btn-secondary .fa {
+	  margin-right: 5px;
+}
+.animate-like {
+	animation-name: likeAnimation;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-duration: 0.65s;
+}
+@keyframes likeAnimation {
+  0%   { transform: scale(30); }
+  100% { transform: scale(1); }
+}
+.card{
+	display: grid;
+	/* grid-template-columns: 65% 35%; */
+	background: linear-gradient(-60deg, rgba(237, 203, 203, 0), rgba(109, 170, 238, 0.5));	
+}
+.navbar{
+  background: #6c91b8;
+}
+.mainbody{
+  background: #e1e2e3;
+  margin-top:-15px;
+}

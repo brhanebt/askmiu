@@ -1,0 +1,113 @@
+<mat-toolbar class="navbar">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>ASK MIU</h1>
+    <span class="menu-spacer"></span>
+    <div>
+
+      <a mat-button [routerLink]="['/home']"> Home </a>
+      <a mat-button [routerLink]="['/timeline']"> Timeline </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a *ngIf="isAdmin" mat-button [routerLink]="'/addtopic'"> Add Topic</a>
+      <a *ngIf="!isAdmin" mat-button [routerLink]="'/followtopic'"> Follow Topic</a>
+      <a mat-button (click)="logout()"> Log Out </a>
+
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav class="navbar">
+    <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
+
+      <!-- <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>
+      <a mat-list-item [routerLink]="'/contacts'"> Contacts </a>
+      <a mat-list-item [routerLink]="'/create-contact'"> Create Contact </a>
+      <a mat-list-item [routerLink]="'/activities'"> Activities </a>
+      <a mat-list-item [routerLink]="'/create-activity'"> Create Activity </a>
+      <a mat-list-item (click)="sidenav.toggle()" href="" mat-list-item>Close</a> -->
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+
+
+<div class="mainbody">
+  <div class="container-fluid">
+    <div class="row justify-content-md-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Timeline</h4>
+          </div>
+
+        </div>
+        <br>
+        <div class="row" *ngFor="let post of timelineData">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              {{post.title}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{post.body}}</p>
+              <!-- <a href="#" class="btn btn-primary"></a> -->
+              <!-- <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer>
+              <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
+                <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+            </a> -->
+            <form [formGroup]="myForm" (ngSubmit)="onReply(post)">
+              <div class="col-6" formGroupName="submitReply">
+
+                  <div class="form-group">
+                      <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
+
+                      </div>
+
+                  <!-- <textarea class="form-control" placeholder="Write your reply here"></textarea> -->
+                  <!-- <button mat-list-item [routerLink]="['/posts/reply', question._id]">Reply</button> -->
+                  <!-- <button mat-list-item >Reply</button> -->
+                  <input type="submit" value ="Reply"/>
+
+              </div>
+
+          </form>
+          <div class="card-body">Replies</div>
+        <ng-container *ngFor="let reply of post.replies">
+            <div>
+                <ul>
+                    <li>{{reply}}</li>
+                </ul>
+            </div>
+        </ng-container>
+            <!-- <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
+            <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer> -->
+
+            <button class="btn btn-primary" (click)="onLike(post)" class="btn-primary">
+              <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+              </button>
+              <span>{{post.likes.length}}</span>
+            </div>
+          </div>
+          </div>
+          <div style="opacity: 0;">"       "</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+   </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
