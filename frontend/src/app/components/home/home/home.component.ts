@@ -8,6 +8,7 @@ import { TimelineService } from 'src/app/services/timeline/timeline.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { HomeService } from 'src/app/services/home.service';
 import { userInfo } from 'os';
+import { FeedService } from 'src/app/services/feed/feed.service';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +36,7 @@ selectedTopics: {id: string, title: string}[] = [];
 
 
   constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
-              , private service: TopicService,private formBuilder: FormBuilder, private homeService: HomeService ) {
+              , private service: TopicService,private formBuilder: FormBuilder, private homeService: HomeService, private feedService: FeedService ) {
 
                 this.homeService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
                 this.homeService.userFeed().subscribe(res => {this.feeddata = res; });
@@ -51,6 +52,9 @@ selectedTopics: {id: string, title: string}[] = [];
         title: ['',Validators.required],
         body : ['',Validators.required]
 
+      }),
+      submitReply: this.formBuilder.group({
+        replies: ''
       })
 
      });
@@ -113,6 +117,19 @@ selectedTopics: {id: string, title: string}[] = [];
  //  onTopicKeyUp(e) {
  //    console.log(e.srcElement.value);
  //  }
+ onReply(questionid) {
+  // this.service.loginUser(this.myForm.value.logindetails);
+  console.log(questionid);
+  console.log(this.myForm.value.submitReply);
+  this.feedService.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+    res => {
+      console.log(res);
+    },
+    err =>{
+      console.log(err);
+    }
+  );
+}
   topicSelected(e) {
    this.selectedTopics.push({id: e.srcElement.value, title: e.srcElement.options[e.srcElement.selectedIndex].text});
   }

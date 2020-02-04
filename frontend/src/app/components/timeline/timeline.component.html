@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="navbar">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
@@ -20,7 +20,7 @@
 
 <mat-sidenav-container>
 
-  <mat-sidenav #sidenav>
+  <mat-sidenav #sidenav class="navbar">
     <mat-nav-list>
       <ng-container *ngFor="let topic of topic">
         <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
@@ -40,8 +40,9 @@
     <div style="height: 88vh;">
 
 
-<div class="main-content">
+<div class="mainbody">
   <div class="container-fluid">
+    <div class="row justify-content-md-center">
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
@@ -64,9 +65,11 @@
             </div>
           </div>
           </div>
+          <div style="opacity: 0;">"       "</div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
 
