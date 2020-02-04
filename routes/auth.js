@@ -70,27 +70,31 @@ router.get('/:userId',verify,async(req,res)=>{
 
 //update by userid
 
-router.put("updateprofile/:userId",verify,async(req,res)=>{
+
+router.put("/updateprofile/:userId",verify,async(req,res)=>{
  const user  =await User.update({_id:req.params.userId},{$set: {name:req.body.name}});
   if(user){
     res.json({updated:true})
   }else{
     res.json({updated:false});
-
   }
 })
 
+
 //Change Password
-router.put("changepassword/:userId",verify,async(req,res)=>{
+router.put("/changepassword/:userId",verify,async(req,res)=>{
   const user = await User.findOne({ _id: req.params.userId});
   if(!user){
     return res.json({status:false,message:"User Not found"});
 
   }
 
-  const validpass = await bcrypt.compare(req.body.oldpassword,user.password);
+  const oldpassword = req.body.oldpassword;
+  const newpassword = req.body.newpassword;
+
+  const validpass = await bcrypt.compare(oldpassword,user.password);
  
-  if(req.body.newpassword.length<6){
+  if(newpassword.length<6){
     return res.json({status:false,message:"New Password Length Must be 6"});
   }
 
@@ -98,11 +102,10 @@ router.put("changepassword/:userId",verify,async(req,res)=>{
     return res.json({status:false,message:"Old Password Doesn't Match"});
   }
 
-
   const salt = await bcrypt.genSalt(10);
-  const newpassword = await bcrypt.hash(req.body.newpassword, salt);
+  const hashpassword = await bcrypt.hash(newpassword, salt);
 
-  const data = User.updateOne({_id:req.params.userId},{$set:{password:newpassword}})
+  const data = User.update({_id:req.params.userId},{$set:{password:hashpassword}})
    if(data){
      res.json({updated:true,message:'password Updated'})
    }else{

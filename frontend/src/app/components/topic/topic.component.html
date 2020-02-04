@@ -74,13 +74,21 @@
                         <div class="form-group">
                             <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
 
-                            </div>
+                           </div>
 
                         <!-- <textarea class="form-control" placeholder="Write your reply here"></textarea> -->
                         <!-- <button mat-list-item [routerLink]="['/posts/reply', question._id]">Reply</button> -->
                         <!-- <button mat-list-item >Reply</button> -->
-                        <input type="submit" value ="Reply"/>
-
+                        <!-- <input type="submit" value ="Reply" [disabled]= '!myForm.valid'/> -->
+                        <button
+                        mat-raised-button
+                        type="submit"
+                        color="primary"
+                        class="btn btn-primary"
+                        [disabled]="!myForm.valid"
+                      >
+                        Reply
+                      </button>
                     </div>
 
                 </form>
