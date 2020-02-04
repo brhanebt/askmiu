@@ -88,7 +88,7 @@ constructor(private localcookie: Localcookie, private router: Router, private ho
         // console.log(res);
         this.followedTopics.push(topic._id);
         console.log(this.followedTopics);
-      }); // unFollowTopic
+       }); // unFollowTopic
 
     }
   //   this.followtopicService.followTopic(topic._id).subscribe(res => {

@@ -34,4 +34,7 @@ router.patch('/unfollow/:userid/:topicid',async(req,res,next)=>{
 
 })
 
+
+// router.param
+
 module.exports = router;

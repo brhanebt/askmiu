@@ -14,7 +14,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  timelineData: [{}] = [{}];
+  timelineData: Question[];
 
   topic: Topic;
   myForm: FormGroup;
@@ -78,13 +78,15 @@ this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; c
       this.isAdmin = true;
     }
   }
-  onReply(questionid) {
+  onReply(question) {
     // this.service.loginUser(this.myForm.value.logindetails);
-    console.log(questionid);
+    // console.log(questionid);
     console.log(this.myForm.value.submitReply);
-    this.timelineService.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+    this.timelineService.submitReply(this.myForm.value.submitReply,question._id).subscribe(
       res => {
         console.log(res);
+        this.timelineData[this.timelineData.indexOf(question)].replies.unshift(this.myForm.value.submitReply.replies);
+        this.myForm.reset();
       },
       err =>{
         console.log(err);
