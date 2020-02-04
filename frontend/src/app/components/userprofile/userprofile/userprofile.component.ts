@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserprofileService } from 'src/app/services/userprofile/userprofile.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { Localcookie } from 'src/app/utils/localcookie';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
@@ -23,6 +23,8 @@ export class UserprofileComponent implements OnInit {
   question: Question;
   private role;
   isAdmin = false;
+  updatepasswordForm: FormGroup;
+  updateusernameForm : FormGroup;
 
   constructor(
     private service: UserprofileService,
@@ -36,6 +38,35 @@ export class UserprofileComponent implements OnInit {
     this.getRole();
     this.getUserProfile();
     this.allTopics();
+    this.updateFormPassword();
+    this. updateUserProfile();
+
+  }
+
+
+  updateFormPassword(){
+    this.updatepasswordForm = this.formBuilder.group({
+
+      updatepasswordgroup : this.formBuilder.group({
+
+        newpassword: ['',[Validators.required,Validators.minLength(6)]],
+        oldpassword : ['',[Validators.required,Validators.minLength(6)]]
+
+      })
+
+     });
+  }
+
+  updateUserProfile(){
+    this.updateusernameForm = this.formBuilder.group({
+
+      updateusernamegroup : this.formBuilder.group({
+
+        name: ['',[Validators.required,Validators.minLength(3)]],
+
+      })
+
+     });
   }
 
   getUserProfile() {
@@ -68,19 +99,37 @@ export class UserprofileComponent implements OnInit {
     );
   }
 
-  updateProfile(name) {
-    this.service.updateUserProfile(name).subscribe(data => {
+  updateProfile() {
+    this.service.updateUserProfile(this.updateusernameForm.value.updateusernamegroup.name).subscribe(data => {
       if (data.updated === true) {
-        this.name = name;
-        console.log("updated");
+        this.name = this.updateusernameForm.value.updateusernamegroup.name;
       }
     });
   }
+
+
   getRole(){
     this.role = this.localcookie.getLoginCookie();
     if(this.role.role!=null && this.role.role==="admin"){
       this.isAdmin = true;
     }
+  }
+
+  onPasswordChange(){
+    this.service.updateUserPassword(this.updatepasswordForm.value.updatepasswordgroup).subscribe(
+      data=>{
+        console.log(data);
+      if(data.updated === true){
+        console.log(data.message)
+        }else{
+          console.log(data.message)
+
+        }
+      },
+      err=>{
+        console.log(err);
+      }
+    )
   }
 
 }

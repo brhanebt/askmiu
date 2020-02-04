@@ -95,17 +95,17 @@ router.put("/changepassword/:userId",verify,async(req,res)=>{
   const validpass = await bcrypt.compare(oldpassword,user.password);
  
   if(newpassword.length<6){
-    return res.json({status:false,message:"New Password Length Must be 6"});
+    return res.json({updated:false,message:"New Password Length Must be 6"});
   }
 
   if(!validpass){
-    return res.json({status:false,message:"Old Password Doesn't Match"});
+    return res.json({updated:false,message:"Old Password Doesn't Match"});
   }
 
   const salt = await bcrypt.genSalt(10);
   const hashpassword = await bcrypt.hash(newpassword, salt);
 
-  const data = User.update({_id:req.params.userId},{$set:{password:hashpassword}})
+  const data = await User.update({_id:req.params.userId},{$set:{password:hashpassword}})
    if(data){
      res.json({updated:true,message:'password Updated'})
    }else{

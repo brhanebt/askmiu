@@ -42,7 +42,7 @@
 
 <div class="main-content">
   <div class="container-fluid">
-    
+
     <div class="row">
       <div class="col-md-8">
         <div class="card">
@@ -50,8 +50,39 @@
             <h4 class="card-title">Edit Profile</h4>
             <p class="card-category">Complete your profile</p>
           </div>
-          <div class="card-body">
-            <form>
+          <!-- <div class="card-body"> -->
+            <form [formGroup]="updateusernameForm" (ngSubmit)="updateProfile()">
+              <div formGroupName="updateusernamegroup">
+                <div class="form-group row">
+                  <div class="col-sm-8 card-body">
+                   <h6>Change Username</h6>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      formControlName="name"
+                      placeholder="Enter Name here"
+                      value="{{name}}" (input)="name = $event.target.value"
+                    />
+                    <br />
+
+
+                    <br>
+                    <button
+                      mat-raised-button
+                      type="submit"
+                      color="primary"
+                      class="btn btn-primary"
+                      [disabled]="!updateusernameForm.valid"
+                    >
+                      Change Username
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <!-- <form>
               <div class="row">
                 <div class="col-md-3">
                   <mat-form-field class="example-full-width">
@@ -69,9 +100,46 @@
                 Update Username
               </button>
               <div class="clearfix"></div>
-            </form>
-          </div>
+            </form> -->
+          <!-- </div> -->
 
+          <form [formGroup]="updatepasswordForm" (ngSubmit)="onPasswordChange()">
+            <div formGroupName="updatepasswordgroup">
+              <div class="form-group row">
+                <div class="col-sm-8 card-body">
+                 <h6>Change Password</h6>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="oldpassword"
+                    formControlName="oldpassword"
+                    placeholder="Old Password here"
+                  />
+                  <br />
+                  <input
+                  type="password"
+                    class="form-control"
+                    id="newpassword"
+                    formControlName="newpassword"
+                    placeholder="New Password Here"
+                  />
+
+                  <br>
+                  <button
+                    mat-raised-button
+                    type="submit"
+                    color="primary"
+                    class="btn btn-primary"
+                    [disabled]="!updatepasswordForm.valid"
+                  >
+                    Change password
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+<!--
           <div class="card-body">
             <form>
               <div class="row">
@@ -101,38 +169,9 @@
               </button>
               <div class="clearfix"></div>
             </form>
-          </div>
+          </div> -->
         </div>
-        <!-- <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header card-header-danger">
-                            <h4 class="card-title">Change Password</h4>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="row">
 
-                                    <div class="col-md-3">
-                                        <mat-form-field class="example-full-width">
-                                          <input matInput placeholder="Old Password" type="password">
-                                        </mat-form-field>
-                                    </div>
-                                    </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                          <input matInput placeholder="New Password address" type="password">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Password</button>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
       </div>
 
       <div class="col-md-4">

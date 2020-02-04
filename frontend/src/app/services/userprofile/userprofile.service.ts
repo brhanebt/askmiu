@@ -45,4 +45,17 @@ export class UserprofileService {
     });
   }
 
+  updateUserPassword(body): Observable<any>{
+    // const body = {name:updatedname};
+    return this.httpclient.put(this.update+JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).userId,body,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'auth-token': JSON.parse(
+          this.cookieservice.get(this.appconstant.logincookie)
+        ).token
+      })
+    });
+  }
 }
