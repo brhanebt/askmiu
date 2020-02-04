@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="navbar">
   <mat-toolbar-row>
     <button mat-icon-button>
       <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
@@ -19,7 +19,7 @@
 
 <mat-sidenav-container>
 
-  <mat-sidenav #sidenav>
+  <mat-sidenav #sidenav class="navbar">
     <mat-nav-list>
       <ng-container *ngFor="let topic of topic">
         <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
@@ -36,7 +36,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div style="height: 88vh;">
+    <div class="mainbody">
 
 
 
@@ -53,23 +53,22 @@
 
 <div class="main-content">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row justify-content-md-center">
         <div class="col-md-8">
           <div class="card">
             <div class="card-header card-header-danger">
               <h4 class="card-title">{{question.title}}</h4>
-              <p class="card-category">Posted on: {{question.date}}</p>
+              <p class="card-category">Posted on: {{question.date | dateconvert}}</p>
             </div>
             <div class="card-body">
               <form>
-                <div class="row">
+                <div class="col-4">
                   <div>
                     <p>{{question.body}}</p>
                   </div>
                 </div>
-                <p>Replies</p>
                 <form [formGroup]="myForm" (ngSubmit)="onSubmit(question._id)">
-                    <div class="container" formGroupName="submitReply">
+                    <div class="col-6" formGroupName="submitReply">
 
                         <div class="form-group">
                             <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
@@ -84,6 +83,7 @@
                     </div>
 
                 </form>
+                <div class="card-body">Replies</div>
                 <ng-container *ngFor="let reply of question.replies">
                     <div>
                         <ul>
@@ -91,7 +91,7 @@
                         </ul>
                     </div>
                 </ng-container>
-                <div class="like-content">
+                <div class="like-content card-body">
 
                     <button class="btn-secondary like-review">
                       <i class="fa fa-heart" aria-hidden="true"></i>{{question.likes.length}} Like

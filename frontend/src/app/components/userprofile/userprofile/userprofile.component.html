@@ -53,29 +53,49 @@
               <div class="row">
                 <div class="col-md-3">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Username" value="{{name}}"  />
+                    <input matInput placeholder="Username" value="{{name}}" (input)="name = $event.target.value" required />
+
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input
-                      matInput
-                      placeholder="Email address"
-                      type="email"
-                      value="{{email}}"
-                      disabled
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
+
               <button
                 mat-raised-button
                 type="submit"
-                class="btn btn-danger pull-right"
+                class="btn btn-danger pull-right" (click)="updateProfile(name)"
               >
-                Update Profile
+                Update Username
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Old Password" />
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="New Password" type="password"  />
+
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger pull-right" (click)="updateProfile(name)"
+              >
+                Change Password
               </button>
               <div class="clearfix"></div>
             </form>
