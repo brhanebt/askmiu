@@ -15,8 +15,8 @@ router.get('/feed/:userid',verify,async (req,res)=>{
       query = {$or:[{"topics":{$in:followedTopics.followedTopics}},{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
 
     }
-    console.log(query);
-    const questions= await Question.find(query).sort({data:-1});
+    const questions= await Question.find(query).sort({date:-1});
+    // console.log(questions);
     res.json(questions);
   }catch(err){
     res.json({message:err.message});
@@ -26,7 +26,7 @@ router.get('/timeline/:userid',verify,async (req,res)=>{
   try{
     let query = {$or:[{"likes":req.params.userid},{"replies":req.params.userid},{"postedby":req.params.userid}]};
     const questions= await Question.find(query).sort({date: -1});
-    console.log(questions);
+    // console.log(questions);
     res.json(questions);
   } catch (err) {
     res.json({ message: err.message });
@@ -92,13 +92,13 @@ router.post("/filter", async (req, res) => {
 //Add Question
 router.post("/addquestion", verify, async (req, res) => {
   const question = new Question({
-    postedby: req.body.userid,
+    postedby: req.body.postedby,
     title: req.body.title,
     date: new Date(),
     body: req.body.body,
     topics: req.body.topics
   });
-
+console.log(question);
   try {
     const savedQuestion = await question.save();
     res.json({ question: savedQuestion });
@@ -110,8 +110,6 @@ router.post("/addquestion", verify, async (req, res) => {
 //Like
 router.post("/like/:questionid", verify, async (req, res) => {
   try {
-    console.log(req.params.questionid);
-    console.log(req.body.userid);
     const findRes = await Question.findOne({
       _id: req.params.questionid,
       likes: req.body.userid
@@ -122,6 +120,7 @@ router.post("/like/:questionid", verify, async (req, res) => {
         { $pull: { likes: req.body.userid } },
         { new: true }
       );
+      console.log(resUnlike);
       res.json(resUnlike);
     } else {
       const resLike = await Question.updateOne(
@@ -129,6 +128,7 @@ router.post("/like/:questionid", verify, async (req, res) => {
         { $addToSet: { likes: req.body.userid } },
         { new: true }
       );
+      console.log(resLike);
       res.json(resLike);
     }
   } catch (err) {

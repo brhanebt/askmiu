@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Localcookie } from 'src/app/utils/localcookie';
-import { Token } from '@angular/compiler';
+import { Localcookie } from '../utils/localcookie';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FeedService {
+export class HomeService {
+
   private url = 'http://localhost:8080/api/v1/posts';
   private topicUrl = 'http://localhost:8080/api/v1/topic';
   private likeUrl = 'http://localhost:8080/api/v1/posts/like';
@@ -18,7 +18,6 @@ export class FeedService {
   userQuestion(body): Observable<any> {
     this.authToken = this.localcookie.getLoginCookie();
     const question = {...body, postedby: this.authToken.userId, date: new Date()};
-    console.log(question);
     return this.httpclient
       .post(this.url + '/addquestion', question, {
         headers: new HttpHeaders({
@@ -28,14 +27,6 @@ export class FeedService {
           'auth-token': this.authToken.token
         })
       });
-      // .subscribe(
-        // res => {
-          // console.log(res);
-        // },
-        // err => {
-          // console.log(err);
-        // }
-      // );
   }
 
 
@@ -65,10 +56,12 @@ export class FeedService {
       });
   }
 
-  likeUser(questionId): Observable<any> {
+  likeUser(questionId) : Observable<any>{
     this.authToken = this.localcookie.getLoginCookie();
-  return  this.httpclient
-      .post(this.likeUrl+'/questionId', {'userid':this.authToken.userId}, {
+    // console.log(questionId);
+    console.log({'userid':this.authToken.userId});//, {'userid':this.authToken.userId},
+   return this.httpclient
+      .post(this.url+'/like/'+questionId, {'userid':this.authToken.userId},{
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -76,8 +69,7 @@ export class FeedService {
           'auth-token': this.authToken.token
           
         })
-      });
+      });//.subscribe(res=>{response=res;console.log(res)});
 
   }
-
 }
