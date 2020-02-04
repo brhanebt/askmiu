@@ -29,6 +29,7 @@ import { DateconvertPipe } from './pipes/date/dateconvert.pipe';
 import { DatePipe } from '@angular/common';
 import { MainComponent } from './components/main/main/main.component';
 import { AddtopicComponent } from './components/addtopic/addtopic/addtopic.component';
+import { FollowtopicsComponent } from './components/followtopics/followtopics/followtopics.component';
 // import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule }from '@angular/material';
 // import { UserprofileComponent } from './components/userprofile/userprofile/userprofile.component';
 // import { DateconvertPipe } from './pipes/date/dateconvert.pipe';
@@ -49,7 +50,8 @@ import { AddtopicComponent } from './components/addtopic/addtopic/addtopic.compo
     UserprofileComponent,
     DateconvertPipe,
     MainComponent,
-    AddtopicComponent
+    AddtopicComponent,
+    FollowtopicsComponent
 
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule,

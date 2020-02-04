@@ -1,0 +1,42 @@
+<mat-toolbar class="navbar">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h1>ASK MIU</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="['/home']"> Home </a>
+      <a mat-button [routerLink]="['/timeline']"> Timeline </a>
+      <a mat-button [routerLink]="'/profile'"> Profile</a>
+      <a *ngIf="isAdmin" mat-button [routerLink]="'/addtopic'"> Add Topic</a>
+      <a *ngIf="!isAdmin" mat-button [routerLink]="'/followtopic'"> Follow Topic</a>
+
+      <a  mat-button (click)="logout()"> Log Out </a>
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav class="navbar">
+    <mat-nav-list>
+      <ng-container *ngFor="let topic of topic">
+        <a mat-list-item [routerLink]="['/posts/filter']" [queryParams]="{topics: topic._id}">{{topic.title}}</a>
+    </ng-container>
+
+
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+      <!-- <router-outlet > </router-outlet> -->
+      <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

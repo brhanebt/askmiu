@@ -1,0 +1,11 @@
+.card{
+	display: grid;
+	/* grid-template-columns: 65% 35%; */
+	background: linear-gradient(-60deg, rgba(237, 203, 203, 0), rgba(109, 170, 238, 0.5));
+}
+.navbar{
+    background: #6c91b8;
+  }
+  .mainbody{
+    background: #e1e2e3;
+  }
