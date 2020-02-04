@@ -27,9 +27,9 @@ export class FollowtopicService {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'Access-Control-Allow-Headers': 'Content-Type',
-          'auth-token': JSON.parse(
-            this.cookieservice.get(this.appconstant.logincookie)
-          ).token
+          // 'auth-token': JSON.parse(
+          //   this.cookieservice.get(this.appconstant.logincookie)
+          // ).token
         })
       });
     }
@@ -43,9 +43,9 @@ export class FollowtopicService {
             'Content-Type': 'application/json',
             Accept: 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type',
-            'auth-token': JSON.parse(
-              this.cookieservice.get(this.appconstant.logincookie)
-            ).token
+            // 'auth-token': JSON.parse(
+            //   this.cookieservice.get(this.appconstant.logincookie)
+            // ).token
           })
         });
       }

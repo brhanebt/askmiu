@@ -65,7 +65,7 @@
               <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
             </a> -->
-            <form [formGroup]="myForm" (ngSubmit)="onReply(post._id)">
+            <form [formGroup]="myForm" (ngSubmit)="onReply(post)">
               <div class="col-6" formGroupName="submitReply">
 
                   <div class="form-group">
