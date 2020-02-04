@@ -27,12 +27,15 @@ export class TopicComponent implements OnInit {
   autoHide = 2000;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  private role;
+  isAdmin = false;
 
   constructor(private service: TopicService, private formBuilder: FormBuilder,
               private snackBar: MatSnackBar,private activatedRoute: ActivatedRoute, private localcookie: Localcookie,
               private router: Router) { }
 
   ngOnInit() {
+   this.getRole();
     this.myForm = this.formBuilder.group({
       submitReply: this.formBuilder.group({
         replies: ''
@@ -102,5 +105,11 @@ export class TopicComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  getRole(){
+    this.role = this.localcookie.getLoginCookie();
+    if(this.role.role!=null && this.role.role==="admin"){
+      this.isAdmin = true;
+    }
+  }
 }
 

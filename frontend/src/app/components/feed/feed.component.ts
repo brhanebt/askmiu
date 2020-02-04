@@ -22,7 +22,7 @@ export class FeedComponent implements OnInit {
     this.service.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
     this.service.userFeed().subscribe(res => {this.feeddata = res; });
 
-    console.log(this.feeddata);
+    // console.log(this.feeddata);
 
    }
 
@@ -42,8 +42,8 @@ export class FeedComponent implements OnInit {
    onSubmit() {
      const post = {...this.myForm.value.feeddetails, topics: []};
      const topics: string[] = [];
-     console.log(this.myForm.value.feeddetails);
-     console.log(this.selectedTopics);
+    //  console.log(this.myForm.value.feeddetails);
+    //  console.log(this.selectedTopics);
 
      this.selectedTopics.forEach(element => {
         topics.push(element.id);
@@ -53,8 +53,9 @@ export class FeedComponent implements OnInit {
      this.service.userQuestion(post).subscribe(res => {this.alltopics.push(res);});
    }
 
-   onLike() {
-     console.log('in like');
+   onLike(post) {
+     console.log(post);
+     this.service.likeUser(post._id);
    }
    onSubmitReply() {
      console.log('in submit reply');

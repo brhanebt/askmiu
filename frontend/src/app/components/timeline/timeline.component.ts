@@ -16,7 +16,8 @@ export class TimelineComponent implements OnInit {
 
   topic: Topic;
   question: Question;
-
+  private role;
+  isAdmin = false;
   constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
     , private service: TopicService ) {
 this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; console.log(res)});
@@ -24,7 +25,8 @@ this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; c
 }
 
    ngOnInit() {
-    this.allTopics();
+     this.getRole();
+     this.allTopics();
 
    }
 
@@ -62,4 +64,10 @@ this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; c
     this.router.navigate(['/login']);
   }
 
+  getRole(){
+    this.role = this.localcookie.getLoginCookie();
+    if(this.role.role!=null && this.role.role==="admin"){
+      this.isAdmin = true;
+    }
+  }
 }
