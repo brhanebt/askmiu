@@ -56,20 +56,19 @@ export class HomeService {
       });
   }
 
-  likeUser(questionId) : Observable<any>{
+  likeUser(questionId): Observable<any> {
     this.authToken = this.localcookie.getLoginCookie();
     // console.log(questionId);
-    console.log({'userid':this.authToken.userId});//, {'userid':this.authToken.userId},
-   return this.httpclient
-      .post(this.url+'/like/'+questionId, {'userid':this.authToken.userId},{
+    return this.httpclient
+      .post(this.url + '/like/' + questionId, {userid: this.authToken.userId}, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'Access-Control-Allow-Headers': 'Content-Type',
           'auth-token': this.authToken.token
-          
+
         })
-      });//.subscribe(res=>{response=res;console.log(res)});
+      }); // .subscribe(res=>{response=res;console.log(res)});
 
   }
 }

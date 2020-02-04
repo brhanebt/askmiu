@@ -13,6 +13,8 @@ export class TopicService {
   private filterTopicsUrl = 'http://localhost:8080/api/v1/posts/filter?topics=';
   private replyUrl = 'http://localhost:8080/api/v1/posts/reply/';
   private addTopicUrl ='http://localhost:8080/api/v1/topic/add';
+  private followedTopicsUrl = 'http://localhost:8080/api/v1/topic/findfollowedtopics';
+
 
   // tslint:disable-next-line: max-line-length
   constructor(private httpclient: HttpClient,
@@ -27,6 +29,19 @@ export class TopicService {
           'Access-Control-Allow-Headers': 'Content-Type',
           'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
   })
+})
+  }
+
+
+getFollowedTopics(userid): Observable<any> {
+  return this.httpclient
+     .get(this.followedTopicsUrl + '/' + userid, {
+       headers: new HttpHeaders({
+         'Content-Type': 'application/json',
+         Accept: 'application/json',
+         'Access-Control-Allow-Headers': 'Content-Type',
+         'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
+ })
 })
 }
 

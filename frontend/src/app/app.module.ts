@@ -52,7 +52,6 @@ import { FollowtopicsComponent } from './components/followtopics/followtopics/fo
     MainComponent,
     AddtopicComponent,
     FollowtopicsComponent
-
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule,
      ReactiveFormsModule, MatSliderModule, BrowserAnimationsModule,

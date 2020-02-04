@@ -9,3 +9,10 @@
   .mainbody{
     background: #e1e2e3;
   }
+  table {
+    counter-reset: tableCount;
+}
+.counterCell:before {
+    content: counter(tableCount);
+    counter-increment: tableCount;
+}

@@ -34,7 +34,28 @@
     <div style="height: 88vh;">
       <!-- <router-outlet > </router-outlet> -->
       <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
+      <table class="table table-striped table-responsive-md btn-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Topic</th>
+            <th>Category</th>
+          </tr>
+        </thead>
 
+        <tbody>
+          <tr  *ngFor = "let topic of topic">
+            <th scope="row" class="counterCell"></th>
+            <td>{{ topic.title }}</td>
+            <td>{{ topic.category }}</td>
+            <td *ngIf="followedTopics.indexOf(topic._id) === -1"><button type="button" class="btn btn-info" (click)="onFollow(topic)">Follow</button>
+            <td *ngIf="followedTopics.indexOf(topic._id)>-1"><button type="button" class="btn btn-danger" (click)="onFollow(topic)">Unfollow</button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------------------- -->
     </div>

@@ -8,7 +8,12 @@ router.get("/findall",verify, async (req, res) => {
   res.json(re);
 
 });
+router.get("/findfollowedtopics/:userid",verify, async (req, res) => {
 
+  const re = await Topic.find({_id:req.params.userid},{_id:0,followedTopics:1});
+  res.json(re);
+
+});
 
 router.post("/findone", verify, async (req, res) => {
 
