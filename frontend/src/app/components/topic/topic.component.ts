@@ -3,7 +3,7 @@ import { TopicService } from 'src/app/services/topic/topic.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Topic } from 'src/app/models/topic';
 import { Localcookie } from 'src/app/utils/localcookie';
-import { Question } from 'src/app/models/Question'
+import { Question } from 'src/app/models/Question';
 import {
   MatSnackBar,
   MatSnackBarConfig,
@@ -31,23 +31,23 @@ export class TopicComponent implements OnInit {
   isAdmin = false;
 
   constructor(private service: TopicService, private formBuilder: FormBuilder,
-              private snackBar: MatSnackBar,private activatedRoute: ActivatedRoute, private localcookie: Localcookie,
+              private snackBar: MatSnackBar, private activatedRoute: ActivatedRoute, private localcookie: Localcookie,
               private router: Router) { }
 
   ngOnInit() {
    this.getRole();
-    this.myForm = this.formBuilder.group({
+   this.myForm = this.formBuilder.group({
       submitReply: this.formBuilder.group({
-        replies: ''
+        replies: ['']
       })
     });
-    this.allTopics();
-    this.filteredTopics();
+   this.allTopics();
+   this.filteredTopics();
 
   }
 
 
-  allTopics(){
+  allTopics() {
     this.service.getTopics().subscribe(
       res => {
         this.topic = res;
@@ -58,7 +58,7 @@ export class TopicComponent implements OnInit {
     );
   }
 
-  filteredTopics(){
+  filteredTopics() {
     this.activatedRoute.queryParams.subscribe(async params => {
       const topicId = await params.topics;
       this.service.filterTopics(topicId).subscribe(
@@ -73,15 +73,16 @@ export class TopicComponent implements OnInit {
 
   }
 
-  onSubmit(questionid) {
+  onSubmit(post) {
     // this.service.loginUser(this.myForm.value.logindetails);
-    console.log(questionid);
-    console.log(this.myForm.value.submitReply);
-    this.service.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+    // console.log(questionid);
+    // console.log(this.myForm.value.submitReply);
+    this.service.submitReply(this.myForm.value.submitReply, post._id).subscribe(
       res => {
-        console.log(res);
+        this.question[this.question.indexOf(post)].replies.unshift(this.myForm.value.submitReply.replies);
+        this.myForm.reset();
       },
-      err =>{
+      err => {
         console.log(err);
       }
     );
@@ -100,14 +101,14 @@ export class TopicComponent implements OnInit {
   // }
 
 
-  async logout(){
+  async logout() {
     await this.localcookie.clearLoginCookie();
     this.router.navigate(['/login']);
   }
 
-  getRole(){
+  getRole() {
     this.role = this.localcookie.getLoginCookie();
-    if(this.role.role!=null && this.role.role==="admin"){
+    if (this.role.role != null && this.role.role ==='admin') {
       this.isAdmin = true;
     }
   }

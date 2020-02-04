@@ -68,17 +68,13 @@
                     <p>{{question.body}}</p>
                   </div>
                 </div>
-                <form [formGroup]="myForm" (ngSubmit)="onSubmit(question._id)">
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit(question)">
                     <div class="col-6" formGroupName="submitReply">
 
                         <div class="form-group">
                             <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
 
                             </div>
-
-                        <!-- <textarea class="form-control" placeholder="Write your reply here"></textarea> -->
-                        <!-- <button mat-list-item [routerLink]="['/posts/reply', question._id]">Reply</button> -->
-                        <!-- <button mat-list-item >Reply</button> -->
                         <input type="submit" value ="Reply"/>
 
                     </div>
