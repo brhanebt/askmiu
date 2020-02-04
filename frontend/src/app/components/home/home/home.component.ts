@@ -45,6 +45,9 @@ selectedTopics: {id: string, title: string}[] = [];
         title: [''],
         body : ['']
 
+      }),
+      submitReply: this.formBuilder.group({
+        replies: ''
       })
 
      });
@@ -104,6 +107,19 @@ selectedTopics: {id: string, title: string}[] = [];
  //  onTopicKeyUp(e) {
  //    console.log(e.srcElement.value);
  //  }
+ onReply(questionid) {
+  // this.service.loginUser(this.myForm.value.logindetails);
+  console.log(questionid);
+  console.log(this.myForm.value.submitReply);
+  this.feedService.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+    res => {
+      console.log(res);
+    },
+    err =>{
+      console.log(err);
+    }
+  );
+}
   topicSelected(e) {
    this.selectedTopics.push({id: e.srcElement.value, title: e.srcElement.options[e.srcElement.selectedIndex].text});
   }
