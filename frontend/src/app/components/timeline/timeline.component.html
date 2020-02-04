@@ -48,7 +48,9 @@
           <div class="card-header">
             <h4 class="card-title">Timeline</h4>
           </div>
+          
         </div>
+        <br>
         <div class="row" *ngFor="let post of timelineData">
         <div class="col-md-12">
           <div class="card">
@@ -58,10 +60,41 @@
             <div class="card-body">
               <p class="card-text">{{post.body}}</p>
               <!-- <a href="#" class="btn btn-primary"></a> -->
-              <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer>
+              <!-- <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer>
               <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
                 <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-            </a>
+            </a> -->
+            <form [formGroup]="myForm" (ngSubmit)="onReply(post._id)">
+              <div class="col-6" formGroupName="submitReply">
+
+                  <div class="form-group">
+                      <textarea  formControlName="replies" class="form-control" placeholder="Write your reply here"></textarea>
+
+                      </div>
+
+                  <!-- <textarea class="form-control" placeholder="Write your reply here"></textarea> -->
+                  <!-- <button mat-list-item [routerLink]="['/posts/reply', question._id]">Reply</button> -->
+                  <!-- <button mat-list-item >Reply</button> -->
+                  <input type="submit" value ="Reply"/>
+
+              </div>
+
+          </form>
+          <div class="card-body">Replies</div>
+        <ng-container *ngFor="let reply of post.replies">
+            <div>
+                <ul>
+                    <li>{{reply}}</li>
+                </ul>
+            </div>
+        </ng-container>
+            <!-- <a [routerLink]="" class="btn btn-primary" (click)="onLike()" class="post-reaction-buttons">
+            <footer class="blockquote-footer">Posted on: {{post.date | dateconvert}}</footer> -->
+
+            <button class="btn btn-primary" (click)="onLike(post)" class="btn-primary">
+              <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
+              </button>
+              <span>{{post.likes.length}}</span>
             </div>
           </div>
           </div>

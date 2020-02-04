@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { TopicService } from 'src/app/services/topic/topic.service';
 import { Topic } from 'src/app/models/topic';
 import { Question } from 'src/app/models/Question';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-timeline',
@@ -15,16 +17,22 @@ export class TimelineComponent implements OnInit {
   timelineData: [{}] = [{}];
 
   topic: Topic;
+  myForm: FormGroup;
   question: Question;
   private role;
   isAdmin = false;
   constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
-    , private service: TopicService ) {
+    , private service: TopicService,private formBuilder: FormBuilder ) {
 this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; console.log(res)});
 
 }
 
    ngOnInit() {
+    this.myForm = this.formBuilder.group({
+      submitReply: this.formBuilder.group({
+        replies: ''
+      })
+    });
      this.getRole();
      this.allTopics();
 
@@ -69,5 +77,18 @@ this.timelineService.userTimeline().subscribe(res => {this.timelineData = res; c
     if(this.role.role!=null && this.role.role==="admin"){
       this.isAdmin = true;
     }
+  }
+  onReply(questionid) {
+    // this.service.loginUser(this.myForm.value.logindetails);
+    console.log(questionid);
+    console.log(this.myForm.value.submitReply);
+    this.timelineService.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+      res => {
+        console.log(res);
+      },
+      err =>{
+        console.log(err);
+      }
+    );
   }
 }
