@@ -5,8 +5,9 @@ import { TopicService } from 'src/app/services/topic/topic.service';
 import { Topic } from 'src/app/models/topic';
 import { Question } from 'src/app/models/Question'
 import { TimelineService } from 'src/app/services/timeline/timeline.service';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { FeedService } from 'src/app/services/feed/feed.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { HomeService } from 'src/app/services/home.service';
+import { userInfo } from 'os';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   topic: Topic;
   question: Question;
-
+  private authtoken;
   //
 
   myForm: FormGroup;
@@ -34,9 +35,10 @@ selectedTopics: {id: string, title: string}[] = [];
 
 
   constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
-              , private service: TopicService,private formBuilder: FormBuilder, private feedService: FeedService ) {
-                this.feedService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
-                this.feedService.userFeed().subscribe(res => {this.feeddata = res; });
+              , private service: TopicService,private formBuilder: FormBuilder, private homeService: HomeService ) {
+
+                this.homeService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
+                this.homeService.userFeed().subscribe(res => {this.feeddata = res; });
   }
 
   ngOnInit() {
@@ -46,8 +48,8 @@ selectedTopics: {id: string, title: string}[] = [];
 
       feeddetails : this.formBuilder.group({
 
-        title: [''],
-        body : ['']
+        title: ['',Validators.required],
+        body : ['',Validators.required]
 
       })
 
@@ -73,34 +75,37 @@ selectedTopics: {id: string, title: string}[] = [];
     );
   }
 
-  // filteredTopics(){
-  //   this.service.filterTopics().subscribe(
-  //     res => {
-  //       this.question= res;
-  //     },
-  //     err => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
 
-  // ----------------------------
   onSubmit() {
     const post = {...this.myForm.value.feeddetails, topics: []};
     const topics: string[] = [];
-    console.log(this.myForm.value.feeddetails);
-    console.log(this.selectedTopics);
+    // console.log(this.myForm.value.feeddetails);
+    // console.log(this.selectedTopics);
 
     this.selectedTopics.forEach(element => {
        topics.push(element.id);
+       this.myForm.reset();
      });
     post.topics = topics;
    //  console.log(post);
-    this.feedService.userQuestion(post).subscribe(res => {this.alltopics.push(res);});
+    this.homeService.userQuestion(post).subscribe(res => {
+      this.feeddata.unshift(res.question)
+    });
   }
 
-  onLike() {
-    console.log('in like');
+  onLike(post) {
+    this.homeService.likeUser(post._id).subscribe(res=>{
+      let userId: String;
+      this.authtoken = this.localcookie.getLoginCookie();//.subscribe(auth=>{userId=auth.userId});
+      let postLikes = post.likes;
+      if(post.likes.includes(this.authtoken.userId)){
+         postLikes = postLikes.filter(ele=>ele!=this.authtoken.userId);
+        this.feeddata[this.feeddata.indexOf(post)].likes=postLikes;
+      }else{
+        postLikes = postLikes.concat(this.authtoken.userId);
+        this.feeddata[this.feeddata.indexOf(post)].likes=postLikes;
+      }
+    });
   }
   onSubmitReply() {
     console.log('in submit reply');
