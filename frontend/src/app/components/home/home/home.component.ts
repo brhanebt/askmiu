@@ -3,7 +3,7 @@ import { Localcookie } from 'src/app/utils/localcookie';
 import { Router } from '@angular/router';
 import { TopicService } from 'src/app/services/topic/topic.service';
 import { Topic } from 'src/app/models/topic';
-import { Question } from 'src/app/models/Question'
+import { Question } from 'src/app/models/Question';
 import { TimelineService } from 'src/app/services/timeline/timeline.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { HomeService } from 'src/app/services/home.service';
@@ -31,12 +31,12 @@ export class HomeComponent implements OnInit {
  private role;
   isAdmin = false;
 
-alltopics: [{}]=[{}];
+alltopics: [{}] = [{}];
 selectedTopics: {id: string, title: string}[] = [];
 
 
-  constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
-              , private service: TopicService,private formBuilder: FormBuilder, private homeService: HomeService, private feedService: FeedService ) {
+  constructor(private timelineService: TimelineService, private localcookie: Localcookie, private router: Router
+              , private service: TopicService, private formBuilder: FormBuilder, private homeService: HomeService, private feedService: FeedService ) {
 
                 this.homeService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
                 this.homeService.userFeed().subscribe(res => {this.feeddata = res; });
@@ -49,12 +49,12 @@ selectedTopics: {id: string, title: string}[] = [];
 
       feeddetails : this.formBuilder.group({
 
-        title: ['',Validators.required],
-        body : ['',Validators.required]
+        title: ['', Validators.required],
+        body : ['', Validators.required]
 
       }),
       submitReply: this.formBuilder.group({
-        replies: ''
+        replies: ['']
       })
 
      });
@@ -62,16 +62,16 @@ selectedTopics: {id: string, title: string}[] = [];
     // this.filteredTopics();
   }
 
-  async logout(){
+  async logout() {
     await this.localcookie.clearLoginCookie();
     this.router.navigate(['/login']);
   }
 
 
-  allTopics(){
+  allTopics() {
     this.service.getTopics().subscribe(
       res => {
-        this.topic= res;
+        this.topic = res;
       },
       err => {
         console.log(err);
@@ -88,26 +88,26 @@ selectedTopics: {id: string, title: string}[] = [];
 
     this.selectedTopics.forEach(element => {
        topics.push(element.id);
-       this.myForm.reset();
      });
     post.topics = topics;
    //  console.log(post);
     this.homeService.userQuestion(post).subscribe(res => {
-      this.feeddata.unshift(res.question)
+      this.myForm.reset();
+      this.feeddata.unshift(res.question);
     });
   }
 
   onLike(post) {
-    this.homeService.likeUser(post._id).subscribe(res=>{
+    this.homeService.likeUser(post._id).subscribe(res => {
       let userId: String;
-      this.authtoken = this.localcookie.getLoginCookie();//.subscribe(auth=>{userId=auth.userId});
+      this.authtoken = this.localcookie.getLoginCookie(); // .subscribe(auth=>{userId=auth.userId});
       let postLikes = post.likes;
-      if(post.likes.includes(this.authtoken.userId)){
-         postLikes = postLikes.filter(ele=>ele!=this.authtoken.userId);
-        this.feeddata[this.feeddata.indexOf(post)].likes=postLikes;
-      }else{
+      if (post.likes.includes(this.authtoken.userId)) {
+         postLikes = postLikes.filter(ele => ele != this.authtoken.userId);
+         this.feeddata[this.feeddata.indexOf(post)].likes = postLikes;
+      } else {
         postLikes = postLikes.concat(this.authtoken.userId);
-        this.feeddata[this.feeddata.indexOf(post)].likes=postLikes;
+        this.feeddata[this.feeddata.indexOf(post)].likes = postLikes;
       }
     });
   }
@@ -117,15 +117,14 @@ selectedTopics: {id: string, title: string}[] = [];
  //  onTopicKeyUp(e) {
  //    console.log(e.srcElement.value);
  //  }
- onReply(questionid) {
+ onReply(post) {
   // this.service.loginUser(this.myForm.value.logindetails);
-  console.log(questionid);
-  console.log(this.myForm.value.submitReply);
-  this.feedService.submitReply(this.myForm.value.submitReply,questionid).subscribe(
+  this.feedService.submitReply(this.myForm.value.submitReply, post._id).subscribe(
     res => {
-      console.log(res);
+      this.feeddata[this.feeddata.indexOf(post)].replies.unshift(this.myForm.value.submitReply.replies);
+      this.myForm.reset();
     },
-    err =>{
+    err => {
       console.log(err);
     }
   );
@@ -137,9 +136,9 @@ selectedTopics: {id: string, title: string}[] = [];
    this.selectedTopics = this.selectedTopics.filter(obj => obj !== topic);
   }
 
-  getRole(){
+  getRole() {
     this.role = this.localcookie.getLoginCookie();
-    if(this.role.role!=null && this.role.role==="admin"){
+    if (this.role.role != null && this.role.role ==='admin') {
       this.isAdmin = true;
     }
   }
