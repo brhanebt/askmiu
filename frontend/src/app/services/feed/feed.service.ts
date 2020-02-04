@@ -68,6 +68,20 @@ export class FeedService {
       });
   }
 
+  // likeUser(questionId): Observable<any> {
+  //   this.authToken = this.localcookie.getLoginCookie();
+  // return  this.httpclient
+  //     .post(this.likeUrl+'/questionId', {'userid':this.authToken.userId}, {
+  //       headers: new HttpHeaders({
+  //         'Content-Type': 'application/json',
+  //         Accept: 'application/json',
+  //         'Access-Control-Allow-Headers': 'Content-Type',
+  //         'auth-token': this.authToken.token
+          
+  //       })
+  //     });
+
+  // }
 
   submitReply(body,questionid): Observable<any> {
     return this.httpclient
