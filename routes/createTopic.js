@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Topic = require("../models/Topic");
+const User = require("../models/User");
 const verify = require('./verifyToken');
 
 router.get("/findall",verify, async (req, res) => {
@@ -9,9 +10,15 @@ router.get("/findall",verify, async (req, res) => {
 
 });
 router.get("/findfollowedtopics/:userid",verify, async (req, res) => {
-
-  const re = await Topic.find({_id:req.params.userid},{_id:0,followedTopics:1});
+console.log(req.params.userid);
+try{
+  const re = await User.find({_id:req.params.userid},{_id:0,followedTopics:1});
+  console.log(re);
   res.json(re);
+}
+  catch(err){
+    console.log(err);
+  }
 
 });
 

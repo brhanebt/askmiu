@@ -19,17 +19,16 @@ export class FollowtopicService {
   followTopic(topicid): Observable<any> {
     this.authToken = this.localcookie.getLoginCookie();
     // console.log(questionId);router.patch('/follow/:userid/:topicid'
-    console.log(this.authToken.token); // , {'userid':this.authToken.userId},
-    console.log(this.followUrl + '/' + this.authToken.userId + '/' + topicid);
     return this.httpclient
       .patch(this.followUrl + '/follow/' + this.authToken.userId + '/' + topicid, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          'auth-token': JSON.parse(
-            this.cookieservice.get(this.appconstant.logincookie)
-          ).token
+          'Access-Control-Allow-Headers': 'Content-Type'
+          // ,
+          // 'auth-token': JSON.parse(
+          //   this.cookieservice.get(this.appconstant.logincookie)
+          // ).token
         })
       });
     }
@@ -42,10 +41,10 @@ export class FollowtopicService {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'auth-token': JSON.parse(
-              this.cookieservice.get(this.appconstant.logincookie)
-            ).token
+            'Access-Control-Allow-Headers': 'Content-Type'//,
+            // 'auth-token': JSON.parse(
+            //   this.cookieservice.get(this.appconstant.logincookie)
+            // ).token
           })
         });
       }

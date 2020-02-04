@@ -42,7 +42,9 @@ constructor(private localcookie: Localcookie, private router: Router, private ho
             private service: TopicService, private followtopicService: FollowtopicService, private formBuilder: FormBuilder) {
               this.authtoken = this.localcookie.getLoginCookie();
               this.homeService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
-              this.service.getFollowedTopics(this.authtoken.userId).subscribe(res => {this.followedTopics = res; console.log(res); });
+              this.service.getFollowedTopics(this.authtoken.userId).subscribe(res => {
+                this.followedTopics = res[0].followedTopics;//console.log(res);
+              });
 }
   ngOnInit() {
     this. getRole();
@@ -74,17 +76,16 @@ constructor(private localcookie: Localcookie, private router: Router, private ho
     }
   }
   onFollow(topic) {
-    if (!this.followedTopics.includes(topic._id)) {
-      this.followtopicService.followTopic(topic._id).subscribe(res => {
-        console.log(res);
+    if (this.followedTopics.includes(topic._id)) {
         console.log('unfollow');
-        this.followedTopics = this.followedTopics.filter(t => t !== topic._id);
-        console.log(this.followedTopics);
+        this.followtopicService.unFollowTopic(topic._id).subscribe(res => {
+          this.followedTopics = this.followedTopics.filter(t => t !== topic._id);
+          console.log(this.followedTopics);
       });
     } else {
       console.log('follow');
-      this.followtopicService.unFollowTopic(topic._id).subscribe(res => {
-        console.log(res);
+      this.followtopicService.followTopic(topic._id).subscribe(res => {
+        // console.log(res);
         this.followedTopics.push(topic._id);
         console.log(this.followedTopics);
       }); // unFollowTopic
