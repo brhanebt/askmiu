@@ -26,18 +26,22 @@ export class HomeComponent implements OnInit {
    reply: new FormControl('')
 });
 
+ private role;
+  isAdmin = false;
+
 alltopics: [{}]=[{}];
 selectedTopics: {id: string, title: string}[] = [];
 
 
   constructor(private timelineService: TimelineService,private localcookie: Localcookie,private router: Router
               , private service: TopicService,private formBuilder: FormBuilder, private feedService: FeedService ) {
-
                 this.feedService.getTopics().subscribe(res => {this.alltopics = res; console.log(res); });
                 this.feedService.userFeed().subscribe(res => {this.feeddata = res; });
   }
 
   ngOnInit() {
+    this. getRole();
+
     this.myForm = this.formBuilder.group({
 
       feeddetails : this.formBuilder.group({
@@ -109,5 +113,12 @@ selectedTopics: {id: string, title: string}[] = [];
   }
   removeSelectedTopic(topic) {
    this.selectedTopics = this.selectedTopics.filter(obj => obj !== topic);
+  }
+
+  getRole(){
+    this.role = this.localcookie.getLoginCookie();
+    if(this.role.role!=null && this.role.role==="admin"){
+      this.isAdmin = true;
+    }
   }
 }

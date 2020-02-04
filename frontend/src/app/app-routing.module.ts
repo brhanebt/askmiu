@@ -11,6 +11,7 @@ import { LoginGuard } from './guards/login/login.guard';
 import { UserprofileComponent } from './components/userprofile/userprofile/userprofile.component';
 import { HomeGuard } from './guards/home/home.guard';
 import { FeedComponent } from './components/feed/feed.component';
+import { AddtopicComponent } from './components/addtopic/addtopic/addtopic.component';
 
 
 
@@ -26,6 +27,8 @@ const routes: Routes = [
   {path: 'feed', component: FeedComponent,canActivate:[LoginGuard]},
   {path: 'posts/filter', component: TopicComponent,canActivate:[LoginGuard]},
   {path: 'posts/reply/:questionid', component: TopicComponent,canActivate:[LoginGuard]},
+  {path: 'addtopic', component: AddtopicComponent,canActivate:[LoginGuard]},
+
   // {path: '404', component: NotFoundComponent},
   // {path: '**', redirectTo: '/404'}
 ]

@@ -1,14 +1,11 @@
 const router = require("express").Router();
 const Topic = require("../models/Topic");
-const { topicValidation } = require("../routes/validation");
 const verify = require('./verifyToken');
 
 router.get("/findall",verify, async (req, res) => {
 
-  const re = await Topic.find({});
+  const re = await Topic.find({}).sort({title:1}).collation({ locale: 'en' });
   res.json(re);
-  console.log(re);
-
 
 });
 
@@ -21,23 +18,22 @@ router.post("/findone", verify, async (req, res) => {
 });
 
 router.post("/add", verify, async (req, res) => {
-    const { error } = topicValidation(req.body);
-    if (error) return res.status(400).json({message: error.details[0].message});
+    // const { error } = topicValidation(req.body);
+    // if (error) return res.status(400).json({message: error.details[0].message});
   
     //check if topic already exists
-    const topicExist = await Topic.findOne({ title: req.body.title.toLowerCase() });
-    c
-  
+    const topicExist = await Topic.findOne({ title: req.body.title.toLowerCase });
+  // if(topicExist) {retu}
   
     //create new topic
     const topic = new Topic({
-      title: req.body.title.toLowerCase(),
+      title: req.body.title,
       category: req.body.category
     });
   
     try {
       const newTopic = await topic.save();
-      res.json({ title: newTopic._id });
+      res.json({newTopic});
     } catch (err) {
       res.json({message:'Error Occured'});
     }

@@ -12,7 +12,7 @@ export class TopicService {
   private allTopicsUrl = 'http://localhost:8080/api/v1/topic/findall';
   private filterTopicsUrl = 'http://localhost:8080/api/v1/posts/filter?topics=';
   private replyUrl = 'http://localhost:8080/api/v1/posts/reply/';
-
+  private addTopicUrl ='http://localhost:8080/api/v1/topic/add';
 
   // tslint:disable-next-line: max-line-length
   constructor(private httpclient: HttpClient,
@@ -55,7 +55,17 @@ export class TopicService {
           'Access-Control-Allow-Headers': 'Content-Type',
           'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
         })
+      });
+  }
+
+  postTopic(body): Observable<any>{
+    return this.httpclient.post(this.addTopicUrl,body,{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+         Accept: 'application/json',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'auth-token': JSON.parse(this.cookieservice.get(this.appconstant.logincookie)).token
       })
-      ;
+    })
   }
 }

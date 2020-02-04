@@ -21,6 +21,8 @@ export class UserprofileComponent implements OnInit {
   date;
   topic: Topic;
   question: Question;
+  private role;
+  isAdmin = false;
 
   constructor(
     private service: UserprofileService,
@@ -31,7 +33,7 @@ export class UserprofileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('COming here');
+    this.getRole();
     this.getUserProfile();
     this.allTopics();
   }
@@ -74,6 +76,11 @@ export class UserprofileComponent implements OnInit {
       }
     });
   }
+  getRole(){
+    this.role = this.localcookie.getLoginCookie();
+    if(this.role.role!=null && this.role.role==="admin"){
+      this.isAdmin = true;
+    }
+  }
 
-  
 }
